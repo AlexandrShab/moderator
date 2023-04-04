@@ -1,7 +1,7 @@
 <?php
 //testing
 //echo '<h1>ModerTop_Bot</h1><br/>';
-//https://api.telegram.org/bot1862861327:AAF7CJdOJaEoGEjqrbu8BgRaPyAsBfecgP0/setwebhook?url=https://sertbot.shinny-mir.by/index.php
+//https://api.telegram.org/bot6089243379:AAHUy2CEpMDH_a3kWATMxv4cU5iWkeA5FpU/setwebhook?url=https://bot.shinny-mir.by/index.php
 $input = file_get_contents('php://input');
 if(!$input)
 {

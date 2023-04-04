@@ -1,6 +1,6 @@
 <?php
 
-define('BOT_TOKEN', '1862861327:AAF7CJdOJaEoGEjqrbu8BgRaPyAsBfecgP0'); // ByStatBot token 
+define('BOT_TOKEN', '6089243379:AAHUy2CEpMDH_a3kWATMxv4cU5iWkeA5FpU'); // ByStatBot token 
 
 function checkTelegramAuthorization($auth_data) {
   $check_hash = $auth_data['hash'];
@@ -36,6 +36,6 @@ try {
 }
 
 // header('Location: login_example.php');
-header('Location: http://sertbot.shinny-mir.by/admin-serv.php');
+header('Location: http://bot.shinny-mir.by/admin-serv.php');
 
 ?>
