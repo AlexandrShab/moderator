@@ -98,7 +98,7 @@ function adminMenu()
     $keyboard = [
         'inline_keyboard' =>
           [
-      [['text' => 'Страница Админа', 'url' => 'https://sertbot.shinny-mir.by/admin-serv.php']],
+      [['text' => 'Страница Админа', 'url' => 'https://bot.shinny-mir.by/admin-serv.php']],
       
           ],
     ];
