@@ -1,4 +1,4 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/shinnymi/sertbot.shinny-mir.by
+    - export DEPLOYPATH=/home/shinnymi/bot.shinny-mir.by

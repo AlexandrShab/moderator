@@ -4,7 +4,7 @@
 require_once __DIR__ . '/autoload.php';
 //var_dump($_COOKIE);
 
-define('BOT_USERNAME', 'ByStatBot'); // place username of your bot here
+define('BOT_USERNAME', 'Moder_TopBot'); // place username of your bot here
 
 if (isset($_GET['logout'])) {
   setcookie('tg_user', '');
