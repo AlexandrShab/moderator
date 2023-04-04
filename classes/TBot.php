@@ -96,7 +96,7 @@ class TBot
         ];
         for($i = 1; $i < count($arrImages); $i++) 
         {
-            $media[$i] = ['type'=>'photo', 'media'=> $arrImages[i]];
+            $media[$i] = ['type'=>'photo', 'media'=> $arrImages[$i]];
         }
         $data = [
           'chat_id'=> $chat_id, //'968407066'
