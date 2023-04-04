@@ -1,6 +1,6 @@
 <?php
 
-define('BOT_TOKEN', '6089243379:AAHUy2CEpMDH_a3kWATMxv4cU5iWkeA5FpU'); // ByStatBot token 
+define('BOT_TOKEN', '6089243379:AAHUy2CEpMDH_a3kWATMxv4cU5iWkeA5FpU'); // ModerTop_Bot token 
 
 function checkTelegramAuthorization($auth_data) {
   $check_hash = $auth_data['hash'];
