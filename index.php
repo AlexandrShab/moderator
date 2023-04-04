@@ -50,7 +50,7 @@ if(isset($update['message']))
     {
         $bot->sendMes(MY_ID, 'button_text:' . $msg['web_app_data']['button_text'] . '\n' . 'data:\n' . $msg['web_app_data']['data']);
     }
-    if ($chat_type == 'private')// Работаем только в личке с ботом
+    if ($chat_type == 'private')// Работаем в личке с ботом
     {   //~~~~~~ Работаем с Юзером и базой ~~~
         $base = new BaseAPI;
         $userFromBase = $base->getUser($tg_user['id']);
@@ -71,7 +71,7 @@ if(isset($update['message']))
         {
             $hi = goodTime();
             
-            $bot->sendMes($chat_id, "👋 " . $hi . ", <b>" . $user->first_name . "</b>\n\n📲 Просто напечатайте название товара и нажмите «Отправить».");
+            $bot->sendMes($chat_id, "👋 " . $hi . ", <b>" . $user->first_name . "</b>\n\nМодератор предназначен для работы в групповых чатах.");
         }
         if (isset($msg['entities'])){
             //~~~~~~~~~~~~~~~~~~~~~~~~~Обработка Команд Боту~~~~~~~~~~~~~~~~~~~~~~~~
