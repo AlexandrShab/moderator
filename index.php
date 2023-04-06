@@ -1,13 +1,9 @@
 <?php
-//testing
-//echo '<h1>ModerTop_Bot</h1><br/>';
-//https://api.telegram.org/bot6089243379:AAHUy2CEpMDH_a3kWATMxv4cU5iWkeA5FpU/setwebhook?url=https://bot.shinny-mir.by/index.php
+
 $input = file_get_contents('php://input');
 if(!$input)
 {
   echo "<h1>Нет страницы для отображения</h1>";
- /* $new_url = 'https://bot.shinny-mir.by/findform.php';
-header('Location: '.$new_url);*/
 exit();
 }
 require_once __DIR__ . '/autoload.php';
