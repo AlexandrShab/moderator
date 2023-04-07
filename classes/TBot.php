@@ -1,10 +1,10 @@
 <?php
     
-    define('TELEGA_URL', 'https://api.telegram.org/bot' . TOKEN);
-    define('MY_ID','968407066');
+    //define('TELEGA_URL', 'https://api.telegram.org/bot' . TOKEN);
+   // define('MY_ID','968407066');
     define('BOT_GROUP', '-1001523457115');   //SertBot_privateMessages
     define('ADMINS_GROUP', '-1001630215811');   //Инфа от SertSale ботов
-    define('BOT_NAME','@Moder_TopBot');
+    //define('BOT_NAME','@Moder_TopBot');
     
 class TBot
 {
