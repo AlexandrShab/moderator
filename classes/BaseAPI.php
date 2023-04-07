@@ -2,6 +2,15 @@
 require_once __DIR__ . '/Connect.php';
 class BaseAPI
 {
+    public static function getToken()
+    {
+        $base = new Connect;
+        $query = "SELECT value FROM vars WHERE name='token'";
+        $data = $base->prepare($query);
+        $data->execute();
+        $arrUsers = array();
+        $token = $data->fetch(PDO::FETCH_ASSOC);
+        print_r($token[0]);    }
     public function getUsers()
     {
         $base = new Connect;
