@@ -1,17 +1,12 @@
 <?php
-require_once __DIR__ . '/autoload.php';
+
 $input = file_get_contents('php://input');
 if(!$input)
 {
   echo "<h1>Нет страницы для отображения</h1>";
-  $bot = new TBot;
- 
 exit();
 }
-
-
-
-
+require_once __DIR__ . '/autoload.php';
 
 $update = json_decode($input, TRUE);
 file_put_contents('update.txt', '$update: ' .print_r($update,1)); 
