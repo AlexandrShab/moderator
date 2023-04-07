@@ -5,7 +5,7 @@ if(!$input)
 {
   echo "<h1>Нет страницы для отображения</h1>";
   $bot = new TBot;
-  $bot->getToken();
+ 
 exit();
 }
 
