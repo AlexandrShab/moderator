@@ -10,7 +10,7 @@ class BaseAPI
         $data->execute();
         $arrUsers = array();
         $token = $data->fetch(PDO::FETCH_ASSOC);
-        return $token;   
+        return $token['value'];   
     }
     public function getUsers()
     {

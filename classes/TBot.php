@@ -12,13 +12,17 @@ class TBot
     const BOT_NAME = '@Moder_TopBot';
     const TELEGA_U = 'https://api.telegram.org/bot';
     public $telega_url;
-    public static function getToken()
+    
+    public function __construct()
     {
         $base = new BaseAPI;
-        $data = $base->getToken();
-        print_r($data);
-
+        $token = 'https://api.telegram.org/bot' .  $base->getToken();
+        print_r($token);
+        define('TELEGA_URL', $token);
+        SELF::$telega_url = TELEGA_URL;
+        print_r(SELF::$telega_url);
     }
+  
     function sendMes($chat_id, $text) //возвращает message_id
     {
         $method = 'sendMessage';
