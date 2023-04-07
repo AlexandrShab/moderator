@@ -10,7 +10,8 @@ class BaseAPI
         $data->execute();
         $arrUsers = array();
         $token = $data->fetch(PDO::FETCH_ASSOC);
-        print_r($token[0]);    }
+        return $token;   
+    }
     public function getUsers()
     {
         $base = new Connect;
