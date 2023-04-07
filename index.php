@@ -1,11 +1,16 @@
 <?php
-
-$input = file_get_contents('php://input');
+  $input = file_get_contents('php://input');
 if(!$input)
 {
   echo "<h1>Нет страницы для отображения</h1>";
 exit();
 }
+ //define('TELEGA_URL', 'https://api.telegram.org/bot' . TOKEN);
+  define('MY_ID','968407066');
+  define('BOT_GROUP', '-1001523457115');   //SertBot_privateMessages
+  define('ADMINS_GROUP', '-1001630215811');   //Инфа от SertSale ботов
+  define('BOT_NAME','@Moder_TopBot');
+  
 require_once __DIR__ . '/autoload.php';
 
 $update = json_decode($input, TRUE);
