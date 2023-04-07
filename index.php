@@ -4,6 +4,8 @@ $input = file_get_contents('php://input');
 if(!$input)
 {
   echo "<h1>Нет страницы для отображения</h1>";
+  $bot = new TBot;
+  $bot->getToken();
 exit();
 }
 require_once __DIR__ . '/autoload.php';
