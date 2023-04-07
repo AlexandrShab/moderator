@@ -17,10 +17,8 @@ class TBot
     {
         $base = new BaseAPI;
         $token = 'https://api.telegram.org/bot' .  $base->getToken();
-        print_r($token);
         define('TELEGA_URL', $token);
-        SELF::$telega_url = TELEGA_URL;
-        print_r(SELF::$telega_url);
+        print_r(TELEGA_URL);
     }
   
     function sendMes($chat_id, $text) //возвращает message_id
