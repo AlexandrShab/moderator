@@ -1,16 +1,14 @@
 <?php
     
     //define('TELEGA_URL', 'https://api.telegram.org/bot' . TOKEN);
-   // define('MY_ID','968407066');
+    define('MY_ID','968407066');
     define('BOT_GROUP', '-1001523457115');   //SertBot_privateMessages
     define('ADMINS_GROUP', '-1001630215811');   //Инфа от SertSale ботов
-    //define('BOT_NAME','@Moder_TopBot');
+    define('BOT_NAME','@Moder_TopBot');
     
 class TBot
 {
-    const MY_ID = '968407066';
-    const BOT_NAME = '@Moder_TopBot';
-    const TELEGA_U = 'https://api.telegram.org/bot';
+    
     public $telega_url;
     
     public function __construct()
@@ -18,7 +16,7 @@ class TBot
         $base = new BaseAPI;
         $token = 'https://api.telegram.org/bot' .  $base->getToken();
         define('TELEGA_URL', $token);
-        print_r(TELEGA_URL);
+        //print_r(TELEGA_URL);
     }
   
     function sendMes($chat_id, $text) //возвращает message_id
