@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/autoload.php';
 $input = file_get_contents('php://input');
 if(!$input)
 {
@@ -8,7 +8,7 @@ if(!$input)
   $bot->getToken();
 exit();
 }
-require_once __DIR__ . '/autoload.php';
+
 
 
 
