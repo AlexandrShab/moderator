@@ -450,7 +450,7 @@ if (isset($_POST['method']))
             $sender = $tg_user->first_name;
             $bot = new TBot;
             $bot->sendMes($chat_id, $text);
-            $bot->sendMes(BOT_GROUP, "Пользователю <b>$name</b> ответил $sender\n" . $text);
+            $bot->sendMes(BOT_GROUP, "Пользователю <b>$name</b> ответил $sender:\n" . $text);
             echo "<h1>Сообщение для <em>$name</em> oтправлено...</h1>$text";
         }
 }
