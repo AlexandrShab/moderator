@@ -32,7 +32,7 @@ if(isset($update['message']))
     $msg = $update['message'];
     $tg_user = $msg["from"];
     $chat = $msg['chat'];
-    $chat_id = ['id'];
+    $chat_id = $msg["from"]['id'];
     $chat_type = $msg['chat']['type'];
     $chat_title = isset($msg['chat']['title']) ? $msg['chat']['title'] : $tg_user['first_name'] . ' ' . $tg_user['last_name'];
     $message_id = $msg['message_id'];
@@ -77,7 +77,6 @@ if(isset($update['message']))
         if (hasHello($mes_text))
         {
             $hi = goodTime();
-            $bot->sendMes(MY_ID, test());
             $bot->sendMes($chat_id, "👋 " . $hi . ", <b>" . $user->first_name . "</b>\n\nМодератор предназначен для работы в групповых чатах.");
         }
         if (isset($msg['entities'])){
