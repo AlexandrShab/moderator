@@ -117,7 +117,8 @@ if(isset($update['message']))
         $db = new BaseAPI;
         $db->updateChatList($chat);
 
-        if (isset($msg['entities'] || isset($msg['caption_entities'])){
+        if (isset($msg['entities']) || isset($msg['caption_entities']))
+        {
           
           $mesHasEntities = true;
           $alarmText = ', похожий на рекламу';
