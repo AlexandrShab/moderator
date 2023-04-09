@@ -233,6 +233,10 @@ $tg_user = getTelegramUserData();
                 <text>Сообщения в личку боту</text></a>
             </div>
             <div class="menu-item">
+                <a href="№" onclick="closeNav();getChats()>
+                <text>Чаты с Модератором</text></a>
+            </div>
+            <div class="menu-item">
                 <a href="https://bot.shinny-mir.by/admin-serv.php?method=getBlackList">
                 <text>Черный список</text></a>
             </div>
@@ -257,7 +261,7 @@ $tg_user = getTelegramUserData();
       async function getRequests(){
             let list = document.getElementById('list');
             if(list) {list.innerHTML = ''}
-            let res = await fetch("https://sertbot.shinny-mir.by/server.php?method=getRequests");
+            let res = await fetch("https://bot.shinny-mir.by/server.php?method=getRequests");
             let requests = await res.json();
             
             let elemForInsert = document.getElementById('data');
@@ -275,7 +279,7 @@ $tg_user = getTelegramUserData();
         async function getMessages(){
             let list = document.getElementById('list');
             if(list) {list.innerHTML = ''}
-            let res = await fetch("https://sertbot.shinny-mir.by/server.php?method=getMessages");
+            let res = await fetch("https://bot.shinny-mir.by/server.php?method=getMessages");
             let messages = await res.json();
             console.log(messages);
             let elemForInsert = document.getElementById('data');
@@ -285,6 +289,23 @@ $tg_user = getTelegramUserData();
             for(let i=0;i<messages.length;i++){
                 let row = `<li class="row_of_list" id="${messages[i].messasge_id}">
                 <strong>${messages[i].date}</strong> (ID:${messages[i].user_id})<br/> - ${messages[i].text}
+                </li>`;
+                elemForInsert.insertAdjacentHTML('beforeend', row)
+            }
+        }
+        async function getChats(){
+            let list = document.getElementById('list');
+            if(list) {list.innerHTML = ''}
+            let res = await fetch("https://bot.shinny-mir.by/server.php?method=getChats");
+            let chats = await res.json();
+            console.log(chats);
+            let elemForInsert = document.getElementById('data');
+            elemForInsert.innerHTML = '';
+            let htmlForInsert = `<h3>Количество чатов с Модератором всего: ${chats.length}</h3>`;
+            elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
+            for(let i=0;i<chats.length;i++){
+                let row = `<li class="row_of_list" id="${chats[i].messasge_id}">
+                <strong>${chats[i].date}</strong> (ID:${chats[i].user_id})<br/> - ${chats[i].text}
                 </li>`;
                 elemForInsert.insertAdjacentHTML('beforeend', row)
             }
