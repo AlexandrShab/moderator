@@ -166,22 +166,22 @@ $tg_user = getTelegramUserData();
        </div>
        <div id="admin-menu" class="admin-menu" style="visibility:hidden;">
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getUsers"><text>Пользователи бота</text></a>
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getUsers"><text>Пользователи бота</text></a>
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getAdmins"><text>Администраторы бота</text></a>
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getAdmins"><text>Администраторы бота</text></a>
               
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getRequests">
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getRequests">
                 <text>Запросы по поиску</text></a>
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getActions">
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getActions">
                 <text>Акции и участники</text></a>
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getProducts">
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getProducts">
                 <text>Редактор товаров базы</text></a>
             </div>
        </div>
@@ -360,11 +360,11 @@ function getTelegramUserData() {
      </div><!-- конец класса content-->
      <script>
         function sendMesage(user_id, name){
-            let link = "https://sertbot.shinny-mir.by/admin-serv.php?method=sendMessage&chat_id=" + user_id + "&name=" + name;
+            let link = "https://bot.shinny-mir.by/admin-serv.php?method=sendMessage&chat_id=" + user_id + "&name=" + name;
             document.location.href=link;
         }
         function admin(user_id, adm){
-            let link = "https://sertbot.shinny-mir.by/admin-serv.php?method=admin&user_id="+user_id+"&set=" + adm;
+            let link = "https://bot.shinny-mir.by/admin-serv.php?method=admin&user_id="+user_id+"&set=" + adm;
             document.location.href=link;
         }
      </script>   
