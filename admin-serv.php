@@ -273,7 +273,7 @@ $tg_user = getTelegramUserData();
                 <strong>${chats[i].date}</strong> (ID:${chats[i].id})<br/><strong> - ${chats[i].title}</strong> 
                 <br/>Тип: ${chats[i].type}
                 </li>`;
-               
+               console.log(chats[i].title);
                 elemForInsert.insertAdjacentHTML('beforeend', row)
             }
         }
