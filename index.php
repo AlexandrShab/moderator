@@ -99,7 +99,7 @@ if(isset($update['message']))
           if($user->is_admin == '1' && $chat_type = 'private')
           {
             $bot->sendMes($chat_id, $hi . ", <b>" . $user->first_name . "</b>");
-            $bot->sendKeyboard($chat_id, "Меню Администратора", adminMenu());
+            $bot->sendKeyboard($chat_id, "Сайт Администратора", adminMenu());
             return;
           }else 
           {
