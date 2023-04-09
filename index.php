@@ -73,7 +73,7 @@ if(isset($update['message']))
         $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date\nAdmin? - $user->is_admin");
         $bot->sendMes(MY_ID, $mes_text);
         require_once __DIR__ . "/functions/work.php";
-       
+        bot-sendMes(MY_ID, test());
         if (hasHello($mes_text))
         {
             $hi = goodTime();

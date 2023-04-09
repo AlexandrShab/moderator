@@ -1,5 +1,8 @@
 <?php
-
+function test()
+{
+return 'Work file works';
+}
 function hasHello($sample)
 {
     $sample = mb_strtolower($sample, 'UTF-8');
@@ -39,7 +42,8 @@ function writeToExpertKeyboard()
     ];
     return $keyboard;
 }
-function mainMenuKeys(){
+function mainMenuKeys()
+{
     $keyboard = [
         'resize_keyboard' => true,
         'keyboard' => [
