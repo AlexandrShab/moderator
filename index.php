@@ -73,10 +73,9 @@ if(isset($update['message']))
         $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date\nAdmin? - $user->is_admin");
         $bot->sendMes(MY_ID, $mes_text);
         require_once __DIR__ . "/functions/work.php";
-
+        $bot->sendMes(MY_ID, $mes_text);
         if (hasHello($mes_text))
         {
-            $bot-sendMes(MY_ID, "hasHello Работает");
             $hi = goodTime();
             
             $bot->sendMes($chat_id, "👋 " . $hi . ", <b>" . $user->first_name . "</b>\n\nМодератор предназначен для работы в групповых чатах.");
