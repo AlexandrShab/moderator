@@ -7,7 +7,7 @@ exit();
 }
  //define('TELEGA_URL', 'https://api.telegram.org/bot' . TOKEN);
   define('MY_ID','968407066');
-  define('BOT_GROUP', '-1001523457115');   //SertBot_privateMessages
+  define('BOT_GROUP', '-1001523457115');   //Bot_privateMessages
   define('ADMINS_GROUP', '-1001630215811');   //Инфа от SertSale ботов
   define('BOT_NAME','@Moder_TopBot');
   
@@ -54,6 +54,7 @@ if(isset($update['message']))
     {
         $db = new BaseAPI;
         $db->updateChatList($chat);
+        sendMes(MY_ID, $chat['title']);
                   
     }
     //~~~~~~~~~~~chat checked~~~~~~~~~~~~~~~~~~~~
@@ -70,6 +71,8 @@ if(isset($update['message']))
        
         $user = new User($userFromBase);
         $user->update($tg_user);
+        $base->storeMessage($mes_text, $user->id,  $message_id);//Сохраняем в базу текст пользователя
+
         $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date\nAdmin? - $user->is_admin");
         $bot->sendMes(MY_ID, $mes_text);
         require_once __DIR__ . "/functions/work.php";
