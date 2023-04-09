@@ -52,7 +52,7 @@ if(isset($update['message']))
     //~~~~~~~  Проверяем чат~~~~~~~~~
     if ($chat_type != 'private') //Если чат не личка с ботом
     {
-        $bot->sendMes(MY_ID, $chat['title']);
+        
         $db = new BaseAPI;
         $db->updateChatList($chat);
         

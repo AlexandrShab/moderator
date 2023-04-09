@@ -2,15 +2,15 @@
 require_once __DIR__ . '/Connect.php';
 class BaseAPI
 {
-    public function updateChatList($newChat)
+    public function updateChatList($chat)
     {
-        $id = $newChat['id'];
-        $title = $newChat['title'] || '';
-        $username = $newChat['username'] || '';
-        $type = $newChat['type'];
+        $id = $chat['id'];
+        $title = $chat['title'];
+        $username = $chat['username'];
+        $type = $chat['type'];
         $db = new Connect;
         $query = "INSERT INTO chats (id, title, username, type) VALUES ('$id', '$title', '$username', '$type') 
-            ON DUPLICATE KEY UPDATE title = '$title', username = '$username', type = '$type';";
+            ON DUPLICATE KEY UPDATE title = bad, username = '$username', type = '$type';";
 
         $data = $db->prepare($query);
         $data->execute();
@@ -95,5 +95,30 @@ class BaseAPI
             $products[] = $product;
         }
         return $products;
+    }
+    public function storeMessage($text, $user_id,  $mes_id)
+    {
+        $base = new Connect;
+        $query = "INSERT INTO users_chats (user_id, message_id, text) VALUES ('$user_id', '$mes_id', '$text');";
+        $data = $base->prepare($query);
+        $res = $data->execute();
+        return $res;
+    }
+   
+    public function getPrivateMessages()
+    {
+        $base = new Connect;
+        $query = "SELECT * FROM users_chats ORDER BY date DESC;";
+        $data = $base->prepare($query);
+        $data->execute();
+        $res = array();
+        $i = 0;
+        while($req = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $res[$i] = $req;
+            $i++;
+        }
+        
+        return $res;
     }
 }   
