@@ -273,7 +273,7 @@ $tg_user = getTelegramUserData();
                 <strong>${chats[i].date}</strong> (ID:${chats[i].id})<br/><strong> - ${chats[i].title}</strong> 
                 <br/>Тип: ${chats[i].type}
                 </li>`;
-               console.log(chats[i].title);
+              
                 elemForInsert.insertAdjacentHTML('beforeend', row)
             }
         }
@@ -305,8 +305,9 @@ $tg_user = getTelegramUserData();
             let htmlForInsert = `<h3>Количество чатов с Модератором всего: ${chats.length}</h3>`;
             elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
             for(let i=0;i<chats.length;i++){
-                let row = `<li class="row_of_list" id="${chats[i].messasge_id}">
-                <strong>${chats[i].date}</strong> (ID:${chats[i].user_id})<br/> - ${chats[i].text}
+                let row = `<li class="row_of_list" id="${chats[i].id}">
+                <strong>${chats[i].date}</strong> (ID:${chats[i].id})<br/><strong> - ${chats[i].title}</strong> 
+                <br/>Тип: ${chats[i].type}
                 </li>`;
                 elemForInsert.insertAdjacentHTML('beforeend', row)
             }
