@@ -5,6 +5,7 @@ require_once __DIR__ . '/autoload.php';
 //var_dump($_COOKIE);
 
 define('BOT_USERNAME', 'Moder_TopBot'); // place username of your bot here
+define('BOT_GROUP', '-973581514');
 
 if (isset($_GET['logout'])) {
   setcookie('tg_user', '');
@@ -446,8 +447,10 @@ if (isset($_POST['method']))
             $chat_id = $_POST['chat_id'];
             $text = $_POST['text'];
             $name = $_POST['name'];
+            $sender = $tg_user->first_name;
             $bot = new TBot;
             $bot->sendMes($chat_id, $text);
+            $bot->sendMes(BOT_GROUP, "Пользователю <b>$name</b> ответил $sender\n" . $text);
             echo "<h1>Сообщение для <em>$name</em> oтправлено...</h1>$text";
         }
 }
