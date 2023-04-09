@@ -12,7 +12,7 @@ class BaseAPI
         $query = "INSERT INTO chats (id, title, username, type) VALUES ('$id', '$title', '$username', '$type') 
             ON DUPLICATE KEY UPDATE title = '$title', username = '$username', type = '$type';";
 
-        $data = $base->prepare($query);
+        $data = $db->prepare($query);
         $data->execute();
         
         return true;
