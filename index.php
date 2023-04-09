@@ -50,12 +50,12 @@ if(isset($update['message']))
         $bot->sendMes(MY_ID, 'button_text:' . $msg['web_app_data']['button_text'] . '\n' . 'data:\n' . $msg['web_app_data']['data']);
     }
     //~~~~~~~  Проверяем чат~~~~~~~~~
-   /* if ($chat_type != 'private') //Если чат не личка с ботом
-    {*/
+    if ($chat_type != 'private') //Если чат не личка с ботом
+    {
         $db = new BaseAPI;
         $db->updateChatList($chat);
                   
-   // }
+    }
     //~~~~~~~~~~~chat checked~~~~~~~~~~~~~~~~~~~~
     if ($chat_type == 'private')// Работаем в личке с ботом
     {   //~~~~~~ Работаем с Юзером и базой ~~~
