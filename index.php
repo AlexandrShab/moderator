@@ -13,7 +13,7 @@ exit();
   define('BOT_NAME','@Moder_TopBot');
   
 require_once __DIR__ . '/autoload.php';
-
+require_once __DIR__ . "/functions/work.php";
 $update = json_decode($input, TRUE);
 file_put_contents('update.txt', '$update: ' .print_r($update,1)); 
 
@@ -56,7 +56,7 @@ if(isset($update['message']))
         $bot->sendMes(MY_ID, 'button_text:' . $msg['web_app_data']['button_text'] . '\n' . 'data:\n' . $msg['web_app_data']['data']);
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~Обработка Команд Боту~~~~~~~~~~~~~~~~~~~~~~~~
-    if (isset($msg['entities'])){
+    if (isset($msg['entities']) && $chatType == 'private'){
       
       if ( $msg['entities'][0]['type'] == 'bot_command')// Если сообщение - команда боту
       {    
@@ -83,7 +83,7 @@ if(isset($update['message']))
         { 
             $res = $bot->getChat($chat_id);
             $bot->sendMes(MY_ID, json_encode($res));
-           
+           return;
         }
         if (($msg['text'] == ('/help' . BOT_NAME)) || ($msg['text'] == '/help'))
         { 
@@ -96,7 +96,7 @@ if(isset($update['message']))
         }
         if (($msg['text'] == ('/admin' . BOT_NAME)) || ($msg['text'] == '/admin'))
         { 
-          if($user->is_admin == '1' && $chat_type = 'private')
+          if($user->is_admin == '1')
           {
             $bot->sendMes($chat_id, $hi . ", <b>" . $user->first_name . "</b>");
             $bot->sendKeyboard($chat_id, "Сайт Администратора", adminMenu());
@@ -108,7 +108,7 @@ if(isset($update['message']))
           }
         }
       }// ~~~~~~~~конец обработки команд~~~~~~~
-          //~~~ Конец проверки кнопок главного меню ~~~~~
+       
   }//~~~ Конец работы с сущностями~~~~~~~~~
     //~~~~~~~  Проверяем чат~~~~~~~~~
     if ($chat_type != 'private') //Если чат не личка с ботом
@@ -139,10 +139,11 @@ if(isset($update['message']))
         $user = new User($userFromBase);
         $user->update($tg_user);
         $base->storeMessage($mes_text, $user->id, $message_id);//Сохраняем в базу текст пользователя
-
-        $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date\nAdmin? - $user->is_admin");
+        $name_as_link = $user->getNameAsTgLink();
+        $user_id = $user->id
+        $bot->sendMes(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id");
         $bot->sendMes(MY_ID, $mes_text);
-        require_once __DIR__ . "/functions/work.php";
+        
         
         if (hasHello($mes_text))
         {
