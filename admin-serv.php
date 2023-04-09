@@ -262,15 +262,16 @@ $tg_user = getTelegramUserData();
             let list = document.getElementById('list');
             if(list) {list.innerHTML = ''}
             let res = await fetch("https://bot.shinny-mir.by/server.php?method=getRequests");
-            let requests = await res.json();
+            let chats = await res.json();
             
             let elemForInsert = document.getElementById('data');
             elemForInsert.innerHTML = '';
-            let htmlForInsert = `<h3>Количество запросов всего: ${requests.length}</h3>`;
+            let htmlForInsert = `<h3>Количество запросов всего: ${chats.length}</h3>`;
             elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
-            for(let i=0;i<requests.length;i++){
-                let row = `<li class="row_of_list" id="${requests[i].query_id}">
-                <strong>${requests[i].date}</strong> (ID:${requests[i].user_id})<br/> - ${requests[i].query}
+            for(let i=0;i<chats.length;i++){
+                let row = `<li class="row_of_list" id="${chats[i].id}">
+                <strong>${chats[i].date}</strong> (ID:${chats[i].id})<br/><strong> - ${chats[i].title}</strong> 
+                <br/>Тип: ${chats[i].type}
                 </li>`;
                
                 elemForInsert.insertAdjacentHTML('beforeend', row)
