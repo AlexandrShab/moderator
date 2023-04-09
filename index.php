@@ -140,10 +140,11 @@ if(isset($update['message']))
         $user = new User($userFromBase);
         $user->update($tg_user);
         $base->storeMessage($mes_text, $user->id, $message_id);//Сохраняем в базу текст пользователя
+        //  И пересылаем сообщение в группу "Личка бота"
         $name_as_link = $user->getNameAsTgLink();
         $user_id = $user->id;
         $bot->sendMes(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id");
-        $bot->forwardMessage($chat_id, $message_id);
+        $bot->forwardMessage(BOT_GROUP, $chat_id,  $message_id);
         
         
         if (hasHello($mes_text))

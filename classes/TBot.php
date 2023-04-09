@@ -71,10 +71,10 @@ class TBot
 
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function forwardMessage($chat_id, $mes_id)
+    function forwardMessage($chat_id, $chatFrom, $mes_id)
     {
-        $data['chat_id'] = BOT_GROUP;
-        $data['from_chat_id'] = $chat_id;
+        $data['chat_id'] = $chat_id;
+        $data['from_chat_id'] = $chatFrom;
         $data['message_id'] = $mes_id;
         $res = $this->sendPost("forwardMessage", $data);
         return $res;
