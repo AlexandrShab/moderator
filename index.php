@@ -125,6 +125,7 @@ if(isset($update['message']))
               { 
                 if($user->is_admin == '1')
                 {
+                  $bot->sendMes(MY_ID, 'Команду вызвал админ');
                   $bot->sendKeyboard($chat_id, "Меню Администратора", adminMenu());
                   return;
                 }
