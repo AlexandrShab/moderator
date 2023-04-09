@@ -5,8 +5,8 @@ class BaseAPI
     public function updateChatList($newChat)
     {
         $id = $newChat['id'];
-        $title = $newChat['title'];
-        $username = $newChat['username'];
+        $title = $newChat['title'] || '';
+        $username = $newChat['username'] || '';
         $type = $newChat['type'];
         $db = new Connect;
         $query = "INSERT INTO chats (id, title, username, type) VALUES ('$id', '$title', '$username', '$type') 
@@ -53,7 +53,7 @@ class BaseAPI
     public function addUser($user)
     {
         $db = new Connect;
-        $id = $user["id"];
+        $id = $user["id"] ;
         $first_name = $user["first_name"];
         $last_name = $user["last_name"];
         $username = $user["username"];
