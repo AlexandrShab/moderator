@@ -88,24 +88,79 @@ $tg_user = getTelegramUserData();
             padding: 5px;
             border: solid gray 1px;
         }
-        .admin-menu {
-            text-align: center;
-            position: fixed;
-            background-color: rgb(255,255,255);
-            width: max-content;
-            box-shadow: 10px 5px 20px gray;
-            
-        }
-        .menu-item {
-            padding: 20px;
-        }
-        .menu-item:hover, .menu-item:active {
-            background-color: rgb(200,200,200);
-        }
-        .menu-item a{
-            text-decoration:none;
-            color:black;
-        }
+        /* Меню боковой панели */
+      .slidepanel {
+        /*margin-left: -500px;*/
+        min-height: max-content;
+        width: 0;
+        height: 100%; /* Укажите высоту */
+        position: fixed; /* Оставаться на месте */
+        z-index: 1; /* Оставайтесь на вершине */
+        top: 0;
+        left: 0;
+        background-color: RGBA(0,0,0,0.93); /* Черный */
+        overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+        padding-top: 60px; /* Поместите содержимое 60px сверху */
+        transition: 0.8s; /* 0.5 секунды эффект перехода для скольжения в боковой панели */
+      }
+
+      /* Боковая панель ссылок */
+      .slidepanel a {
+        padding: 8px 8px 15px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+      }
+
+      /* При наведении курсора мыши на навигационные ссылки измените их цвет */
+      .slidepanel a:hover {
+        color: #a7a7a7;
+        background-color: #444;
+      }
+
+      /* Положение и стиль кнопки закрытия (верхний правый угол) */
+      .slidepanel .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        color: #ffffff;
+      }
+
+      /* Стиль кнопка, которая используется для открытия боковой панели */
+      .openbtn {
+        margin-bottom: 20px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+      }
+
+      .openbtn:hover {
+        background-color: #444;
+      }
+      .closebtn:hover {
+        cursor: pointer;
+        color: #a7a7a7;
+      }
+      .row_of_list {
+        padding:10px;
+        border: solid lightgray 1px;
+        border-radius:10px;
+        margin: 8px;
+      }
+      li{
+        list-style-type: none;
+      }
+      li:hover{
+        box-shadow: 5px 5px 10px black;
+        translate: 0 3px;
+      }
     </style>
     
 </head>
@@ -184,14 +239,54 @@ $tg_user = getTelegramUserData();
                 <a href="https://bot.shinny-mir.by/admin-serv.php?method=getProducts">
                 <text>Редактор товаров базы</text></a>
             </div>
-       </div>
+            </div>
+       <div id="data">
+                
+        </div>
        <script>
-        function showMenu(){
-           let menuState = document.getElementById('admin-menu').style.visibility;
-           if (menuState == 'hidden'){
-            menuState = 'visible';
-           } else{menuState ='hidden'}
-           document.getElementById('admin-menu').style.visibility = menuState;
+        /* Установите ширину боковой панели на 250 пикселей (показать его) */
+      function openNav() {
+        document.getElementById("mySlidepanel").style.width = "100%";
+      }
+
+      /* Установите ширину боковой панели в 0 (скройте ее) */
+      function closeNav() {
+        document.getElementById("mySlidepanel").style.width = "0%";
+      }
+      async function getRequests(){
+            let list = document.getElementById('list');
+            if(list) {list.innerHTML = ''}
+            let res = await fetch("https://sertbot.shinny-mir.by/server.php?method=getRequests");
+            let requests = await res.json();
+            
+            let elemForInsert = document.getElementById('data');
+            elemForInsert.innerHTML = '';
+            let htmlForInsert = `<h3>Количество запросов всего: ${requests.length}</h3>`;
+            elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
+            for(let i=0;i<requests.length;i++){
+                let row = `<li class="row_of_list" id="${requests[i].query_id}">
+                <strong>${requests[i].date}</strong> (ID:${requests[i].user_id})<br/> - ${requests[i].query}
+                </li>`;
+               
+                elemForInsert.insertAdjacentHTML('beforeend', row)
+            }
+        }
+        async function getMessages(){
+            let list = document.getElementById('list');
+            if(list) {list.innerHTML = ''}
+            let res = await fetch("https://sertbot.shinny-mir.by/server.php?method=getMessages");
+            let messages = await res.json();
+            console.log(messages);
+            let elemForInsert = document.getElementById('data');
+            elemForInsert.innerHTML = '';
+            let htmlForInsert = `<h3>Количество сообщений всего: ${messages.length}</h3>`;
+            elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
+            for(let i=0;i<messages.length;i++){
+                let row = `<li class="row_of_list" id="${messages[i].messasge_id}">
+                <strong>${messages[i].date}</strong> (ID:${messages[i].user_id})<br/> - ${messages[i].text}
+                </li>`;
+                elemForInsert.insertAdjacentHTML('beforeend', row)
+            }
         }
        </script>
 <?php
@@ -289,7 +384,7 @@ if (isset($_GET['method']))
         
        
     }
-    if($_GET['method'] == 'admin') 
+    if($_GET['method'] == 'admin') //изменение статуса админ/не админ
     {
         //var_dump($_GET);
         $id = $_GET['user_id'];
