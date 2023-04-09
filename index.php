@@ -76,6 +76,7 @@ if(isset($update['message']))
 
         if (hasHello($mes_text))
         {
+            $bot-sendMes(MY_ID, "hasHello Работает");
             $hi = goodTime();
             
             $bot->sendMes($chat_id, "👋 " . $hi . ", <b>" . $user->first_name . "</b>\n\nМодератор предназначен для работы в групповых чатах.");
@@ -125,7 +126,7 @@ if(isset($update['message']))
               { 
                 if($user->is_admin == '1')
                 {
-                  $bot->sendMes(MY_ID, 'Команду вызвал админ');
+                  
                   $bot->sendKeyboard($chat_id, "Меню Администратора", adminMenu());
                   return;
                 }
