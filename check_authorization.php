@@ -16,7 +16,7 @@ function checkTelegramAuthorization($auth_data) {
   $secret_key = hash('sha256', BOT_TOKEN, true);
   $hash = hash_hmac('sha256', $data_check_string, $secret_key);
   if (strcmp($hash, $check_hash) !== 0) {
-    throw new Exception('Data is NOT from Telegram');
+    throw new Exception('Data is NOT from Telegram'. BOT_TOKEN);
   }
   if ((time() - $auth_data['auth_date']) > 86400) {
     throw new Exception('Data is outdated');
