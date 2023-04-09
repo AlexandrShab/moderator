@@ -33,12 +33,15 @@ if(isset($update['message']))
 {
     $msg = $update['message'];
     $tg_user = $msg['from'];
+    $user_id = $msg['from']['id'];
+
     $chat = $msg['chat'];
-    $chat_id = $msg['from']['id'];
+    $chat_id = $chat['id'];
     $chat_type = $msg['chat']['type'];
     $chat_title = isset($msg['chat']['title']) ? $msg['chat']['title'] : $tg_user['first_name'] . ' ' . $tg_user['last_name'];
+
     $message_id = $msg['message_id'];
-    $mes_text = $msg['text'];
+    $mes_text = isset($msg['text']) ? $msg['text'] : '';
     if (isset($msg['caption'])){
         $mes_text = $msg['caption'];
     }
@@ -136,7 +139,7 @@ if(isset($update['message']))
         $alarmText = 'Сообщение содержит контент';
         $db = new BaseAPI;
         $db->updateChatList($chat);//Проверяем/добавляем чат
-        $db->addChatMember($tg_user['id'], $chat_id);//Проверяем/добавляем чат-мембера
+        $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
         if (isset($msg['entities']) || isset($msg['caption_entities']))
         {
           
