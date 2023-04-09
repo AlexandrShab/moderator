@@ -136,4 +136,51 @@ class BaseAPI
         
         return $res;
     }
+    public function addChatMember($user_id, $chat_id)
+    {
+        $base = new Connect;
+        $query = "SELECT * FROM chat_members WHERE id='$user_id';";
+        $data = $base->prepare($query);
+        $data->execute();
+        $res = array();
+        $memberOfChat = false;
+        $i = 0;
+        while($req = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $res[$i] = $req;
+            $i++;
+            if ($req->chat_id == $chat_id)
+            {
+                $memberOfChat = true;
+            }
+        }
+        if ($i == 0 || $memberOfChat == false)// Если юзера нет в таблице или нет в текущем чате
+        {
+            $query = "INSERT INTO chat_members (id, chat_id) VALUES ('$user_id', '$chat_id');";
+            $data = $base->prepare($query);
+            $data->execute();
+        }else
+        {
+            $now = date("Y-m-d H:i:s");
+            $query = "UPDATE chat_members SET last_date = '$now' WHERE id ='$user_id' AND chat_id = '$chat_id';";
+            $data = $base->prepare($query);
+            $data->execute();
+        }
+        return true;
+    }
+    public function getChatMembers()
+    {
+      $base = new Connect;
+         $query = "SELECT * FROM chat_members ORDER BY first_date DESC;";
+        $data = $base->prepare($query);
+        $data->execute();
+        $res = array();
+        $i = 0;
+        while($req = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $res[$i] = $req;
+            $i++;
+        }  
+        return $res;
+    }
 }   
