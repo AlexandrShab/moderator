@@ -143,7 +143,7 @@ if(isset($update['message']))
         //  И пересылаем сообщение в группу "Личка бота"
         $name_as_link = $user->getNameAsTgLink();
         $user_id = $user->id;
-        $bot->sendMes(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id");
+        $bot->sendKeyboard(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id", answerFromBot($user_id, $user->first_name));
         $bot->forwardMessage(BOT_GROUP, $chat_id,  $message_id);
         
         

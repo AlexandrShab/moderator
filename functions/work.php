@@ -108,3 +108,13 @@ function adminMenu()
     ];
     return $keyboard;
 }
+function answerFromBot($chat_id, $name)
+{
+     $keyboard = [
+        'inline_keyboard' =>
+          [
+      [['text'=> 'Ответить ботом','url' => "http://bot.shinny-mir.by?method=sendMessage&chat_id=$chat_id&name=$name"]],
+            ],
+    ];
+    return $keyboard;   
+}
