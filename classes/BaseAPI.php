@@ -2,6 +2,21 @@
 require_once __DIR__ . '/Connect.php';
 class BaseAPI
 {
+    public function updateChatList($newChat)
+    {
+        $id = $newChat['id'];
+        $title = $newChat['title'];
+        $username = $newChat['username'];
+        $type = $newChat['type'];
+        $db = new Connect;
+        $query = "INSERT INTO chats (id, title, username, type) VALUES ('$id', '$title', '$username', '$type') 
+            ON DUPLICATE KEY UPDATE title = '$title', username = '$username', type = '$type';";
+
+        $data = $base->prepare($query);
+        $data->execute();
+        
+        return true;
+    }
     public static function getToken()
     {
         $base = new Connect;
