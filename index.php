@@ -140,7 +140,7 @@ if(isset($update['message']))
         $user->update($tg_user);
         $base->storeMessage($mes_text, $user->id, $message_id);//Сохраняем в базу текст пользователя
         $name_as_link = $user->getNameAsTgLink();
-        $user_id = $user->id
+        $user_id = $user->id;
         $bot->sendMes(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id");
         $bot->sendMes(MY_ID, $mes_text);
         
