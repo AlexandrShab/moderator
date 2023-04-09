@@ -85,18 +85,18 @@ class BaseAPI
         $data->execute();
         return true;
     }
-    public function getAllProducts()
+    public function getBadWords()
     {
         $base = new Connect;
-        $query = "SELECT * FROM products";
+        $query = "SELECT * FROM bad_words";
         $data = $base->prepare($query);
         $data->execute();
-        $products = array();
-        while($product = $data->fetch(PDO::FETCH_OBJ))
+        $words = array();
+        while($word = $data->fetch(PDO::FETCH_OBJ))
         {
-            $products[] = $product;
+            $words[] = $word;
         }
-        return $products;
+        return $words;
     }
     public function findProd($sample)
     {
