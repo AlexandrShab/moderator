@@ -117,7 +117,7 @@ $tg_user = getTelegramUserData();
     
     //~~~~~~~~~
     if ($tg_user !== false) {
-        if ($tg_user->isAdmin == '1'){$isAdmin = true;}//~~~~~~~~~Check isAdmin~~~~~~~~~~~~~~~~~~~~~~
+        if ($tg_user->is_admin == '1'){$isAdmin = true;}//~~~~~~~~~Check isAdmin~~~~~~~~~~~~~~~~~~~~~~
         //var_dump($tg_user);
       $first_name = htmlspecialchars($tg_user->first_name);
       //$html .= "<name style=\"float:right;\">{$first_name}</name>";
