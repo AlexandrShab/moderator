@@ -233,7 +233,7 @@ $tg_user = getTelegramUserData();
                 <text>Сообщения в личку боту</text></a>
             </div>
             <div class="menu-item">
-                <a href="№" onclick="closeNav();getChats()>
+                <a href="#" onclick="closeNav();getChats();">
                 <text>Чаты с Модератором</text></a>
             </div>
             <div class="menu-item">
