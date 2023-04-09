@@ -151,7 +151,7 @@ $tg_user = getTelegramUserData();
     
 ?>
     <div class="brand" style="backgroundColor: black;">
-        <text>SertSale_bot</text>
+        <text>Moder_TopBot</text>
     </div>
     
 <?php
