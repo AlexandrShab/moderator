@@ -327,7 +327,7 @@ if (isset($_POST['method']))
             $chat_id = $_POST['chat_id'];
             $text = $_POST['text'];
             $name = $_POST['name'];
-            $bot = new Telega;
+            $bot = new TBot;
             $bot->sendMes($chat_id, $text);
             echo "<h1>Сообщение для <em>$name</em> oтправлено...</h1>$text";
         }
