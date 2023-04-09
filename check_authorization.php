@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/autoload.php';
-
+  $db = new BaseAPI;
+  $token = $db->getToken();
+  define('BOT_TOKEN', $token); // ModerTop_Bot token 
 
 function checkTelegramAuthorization($auth_data) {
-  $db = new BaseAPI;
-$token = $db->getToken();
-define('BOT_TOKEN', '$token'); // ModerTop_Bot token 
+
 
   $check_hash = $auth_data['hash'];
   unset($auth_data['hash']);
@@ -18,7 +18,7 @@ define('BOT_TOKEN', '$token'); // ModerTop_Bot token
   $secret_key = hash('sha256', BOT_TOKEN, true);
   $hash = hash_hmac('sha256', $data_check_string, $secret_key);
   if (strcmp($hash, $check_hash) !== 0) {
-    throw new Exception('Data is NOT from Telegram'. BOT_TOKEN);
+    throw new Exception('Data is NOT from Telegram');
   }
   if ((time() - $auth_data['auth_date']) > 86400) {
     throw new Exception('Data is outdated');
