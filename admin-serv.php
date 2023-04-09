@@ -219,9 +219,10 @@ $tg_user = getTelegramUserData();
         <div id="mySlidepanel" class="slidepanel">
             <div class="closebtn" onclick="closeNav()">&times;</div>
        
-       <div id="admin-menu" class="admin-menu" style="visibility:hidden;">
+       
             <div class="menu-item">
-                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getUsers"><text>Пользователи бота</text></a>
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getUsers">
+                    <text>Пользователи бота</text></a>
             </div>
             <div class="menu-item">
                 <a href="https://bot.shinny-mir.by/admin-serv.php?method=getAdmins"><text>Администраторы бота</text></a>
@@ -239,7 +240,7 @@ $tg_user = getTelegramUserData();
                 <a href="https://bot.shinny-mir.by/admin-serv.php?method=getProducts">
                 <text>Редактор товаров базы</text></a>
             </div>
-            </div>
+        </div>
        <div id="data">
                 
         </div>
