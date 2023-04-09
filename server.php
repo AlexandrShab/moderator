@@ -26,5 +26,6 @@
 
 
 $db = new BaseAPI;
-$wordsArr = $db->getBadWords();
-var_dump($wordsArr);
+for($i=0;$i<count($badWords);$i++){
+  $db->addWord($badWords[$i]);
+}
