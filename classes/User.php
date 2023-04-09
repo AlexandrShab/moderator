@@ -37,8 +37,8 @@ class User
         $data = $base->prepare($query);
         $data->execute();
         $arr = $data->fetch(PDO::FETCH_ASSOC);
-        $this->isAdmin = $arr['is_admin']; 
-        return $this->isAdmin;
+        $this->is_admin = $arr['is_admin']; 
+        return $this->is_admin;
     }
     public function update($arrUser)
     {

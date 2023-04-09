@@ -70,7 +70,7 @@ if(isset($update['message']))
        
         $user = new User($userFromBase);
         $user->update($tg_user);
-        $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date");
+        $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date\nAdmin? - $user->is_admin");
         $bot->sendMes(MY_ID, $mes_text);
         require_once __DIR__ . "/functions/work.php";
 
