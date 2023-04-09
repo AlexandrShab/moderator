@@ -77,10 +77,10 @@ class BaseAPI
         $data->execute();
         return true;
     }
-    public function addProduct($prod, $doc_type)
+    public function addWord($word)
     {
          $db = new Connect;
-         $query = "INSERT INTO products (name, doc_type) VALUES ('$prod', '$doc_type');";
+         $query = "INSERT INTO bad_words (word) VALUES ('$word');";
         $data = $db->prepare($query);
         $data->execute();
         return true;
