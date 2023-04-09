@@ -17,6 +17,21 @@ class BaseAPI
         
         return true;
     }
+    public function getChatList()
+    {
+        $base = new Connect;
+        $query = "SELECT * FROM chats";
+        $data = $base->prepare($query);
+        $data->execute();
+        $arrChats = array();
+        $i=0;
+        while($chat = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $arrChats[$i] = $chat;
+            $i++;
+        }
+        return $arrChats;
+    }
     public static function getToken()
     {
         $base = new Connect;

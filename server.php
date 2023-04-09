@@ -2,14 +2,14 @@
   require_once __DIR__ . '/autoload.php';
   if(isset($_GET['method'])) 
   {
-    if( $_GET['method'] == 'getRequests')//Получение списка поисковых запросов из ВебАпп
+    if( $_GET['method'] == 'getChats')//Получение списка поисковых запросов из ВебАпп
     {
         $base = new BaseAPI;
-        $requests = $base->getRequests();
-        $requests = json_encode($requests);
+        $chats = $base->getChatList();
+        $chats = json_encode($chats);
         
         header('Content-Type: application/json');
-        print_r($requests);
+        print_r($chats);
         exit;
     }
     if( $_GET['method'] == 'getMessages')//Получение списка сообщений в личку боту
