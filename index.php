@@ -36,7 +36,10 @@ if(isset($update['message']))
     $chat_type = $msg['chat']['type'];
     $chat_title = isset($msg['chat']['title']) ? $msg['chat']['title'] : $tg_user['first_name'] . ' ' . $tg_user['last_name'];
     $message_id = $msg['message_id'];
-    $mes_text = $update['message']['text'];
+    $mes_text = $msg['text'];
+    if (isset($msg['caption'])){
+        $mes_text = $msg['caption'];
+    }
     //$menuButton = mb_substr($mes_text, 0, 1);
 
     if (($msg['text'] == ('/getChat' . BOT_NAME)) || ($msg['text'] == '/getChat'))
@@ -55,9 +58,14 @@ if(isset($update['message']))
         
         $db = new BaseAPI;
         $db->updateChatList($chat);
-        
+
+        if (isset($msg['entities'] || isset($msg['caption_entities'])){
+          
+          $mesHasEntities = true;
+          $alarmText = ', похожий на рекламу';
+        }
                   
-    }
+    }//конец обработки неприватных чатов
     //~~~~~~~~~~~chat checked~~~~~~~~~~~~~~~~~~~~
     if ($chat_type == 'private')// Работаем в личке с ботом
     {   //~~~~~~ Работаем с Юзером и базой ~~~
@@ -72,7 +80,7 @@ if(isset($update['message']))
        
         $user = new User($userFromBase);
         $user->update($tg_user);
-        $base->storeMessage($mes_text, $user->id,  $message_id);//Сохраняем в базу текст пользователя
+        $base->storeMessage($mes_text, $user->id, $message_id);//Сохраняем в базу текст пользователя
 
         $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date\nAdmin? - $user->is_admin");
         $bot->sendMes(MY_ID, $mes_text);
