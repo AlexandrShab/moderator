@@ -215,10 +215,10 @@ $tg_user = getTelegramUserData();
 ?>
     <div id="content">
         <p1 class="main-title">Страница администратора</p1>
-        <div id="burger" style="visibility:visible;">
-            <button id="btn" style="margin: 20px"
-            onclick="showMenu()">Меню Администратора</button>
-       </div>
+        <button class="openbtn" onclick="openNav()">&#9776; Меню</button>
+        <div id="mySlidepanel" class="slidepanel">
+            <div class="closebtn" onclick="closeNav()">&times;</div>
+       
        <div id="admin-menu" class="admin-menu" style="visibility:hidden;">
             <div class="menu-item">
                 <a href="https://bot.shinny-mir.by/admin-serv.php?method=getUsers"><text>Пользователи бота</text></a>
