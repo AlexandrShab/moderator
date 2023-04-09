@@ -113,7 +113,7 @@ function answerFromBot($chat_id, $name)
      $keyboard = [
         'inline_keyboard' =>
           [
-      [['text'=> 'Ответить ботом','url' => "http://bot.shinny-mir.by?method=sendMessage&chat_id=$chat_id&name=$name"]],
+      [['text'=> 'Ответить ботом','url' => "http://bot.shinny-mir.by/admin-serv.php?method=sendMessage&chat_id=$chat_id&name=$name"]],
             ],
     ];
     return $keyboard;   
