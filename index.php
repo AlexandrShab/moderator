@@ -73,7 +73,7 @@ if(isset($update['message']))
         $bot->sendMes(MY_ID, "Пишет <b>$user->first_name $user->last_name</b> \nДата старта: $user->date\nAdmin? - $user->is_admin");
         $bot->sendMes(MY_ID, $mes_text);
         require_once __DIR__ . "/functions/work.php";
-        $bot->sendMes(MY_ID, $mes_text);
+       
         if (hasHello($mes_text))
         {
             $hi = goodTime();
@@ -125,7 +125,7 @@ if(isset($update['message']))
               { 
                 if($user->is_admin == '1')
                 {
-                  
+                  $bot->sendMes($chat_id, $hi . ", <b>" . $user->first_name . "</b>");
                   $bot->sendKeyboard($chat_id, "Меню Администратора", adminMenu());
                   return;
                 }
