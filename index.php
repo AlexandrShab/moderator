@@ -1,4 +1,5 @@
 <?php
+  date_default_timezone_set('Europe/Minsk');
   $input = file_get_contents('php://input');
 if(!$input)
 {
