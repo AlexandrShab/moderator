@@ -143,7 +143,7 @@ if(isset($update['message']))
         $name_as_link = $user->getNameAsTgLink();
         $user_id = $user->id;
         $bot->sendMes(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id");
-        $bot->sendMes(MY_ID, $mes_text);
+        $bot->forwardMessage(BOT_GROUP, $message_id);
         
         
         if (hasHello($mes_text))
