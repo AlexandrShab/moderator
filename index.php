@@ -78,8 +78,9 @@ if(isset($update['message']))
         //  И пересылаем сообщение в группу "Личка бота"
         $name_as_link = $user->getNameAsTgLink();
         $user_id = $user->id;
-        $bot->sendKeyboard(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id", answerFromBot($user_id, $user->first_name));
         $bot->forwardMessage(BOT_GROUP, $chat_id,  $message_id);
+        $bot->sendKeyboard(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id", answerFromBot($user_id, $user->first_name));
+        
         
         
         if (hasHello($mes_text))
@@ -140,13 +141,22 @@ if(isset($update['message']))
         $db = new BaseAPI;
         $db->updateChatList($chat);//Проверяем/добавляем чат
         $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
+
+
         if (isset($msg['entities']) || isset($msg['caption_entities']))
         {
-          
           $mesHasEntities = true;
           $alarmText = ', похожий на рекламу';
         }
-                  
+        if(mesHasBadWords($mes_text) == false){return}//выход, если сообщение чисто
+        else  //Если текст сообщения содержит слова табу
+        {
+            //Сохраним юзера в черный список, удалим сообщение и забаним его
+            $bot->delMess($chat_id, $message_id);
+            
+        }
+        
+       
     }//конец обработки неприватных чатов
     //~~~~~~~~~~~chat checked~~~~~~~~~~~~~~~~~~~~
     

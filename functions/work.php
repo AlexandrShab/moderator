@@ -1,4 +1,23 @@
 <?php
+function mesHasBadWords($userMessage)
+{
+    $db = new BaseAPI;  
+    $words = $db->getBadWords();// Получаем из базы массив со словами
+    $sample = mb_strtolower($userMessage, 'UTF-8'); //Перевод текста сообщения в нижний регистр
+    $arrFinded = [];
+    for($i=0;$i<count($words);$i++)
+    {
+        if(strpos($sample, $words[i]) > -1)
+        {
+            $arrFinded[] = $words[i];
+        }
+    }
+    if(count($arrFinded)>0)
+    {
+        return $arrFinded;
+    }
+    return false;
+}
 function test()
 {
 return 'Work file works';
