@@ -152,6 +152,7 @@ if(isset($update['message']))
         else  //Если текст сообщения содержит слова табу
         {
             //Сохраним юзера в черный список, удалим сообщение и забаним его
+            $bot->forwardMessage();
             $bot->delMess($chat_id, $message_id);
             
         }
