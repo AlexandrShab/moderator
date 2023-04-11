@@ -28,6 +28,48 @@ if (isset($update['update_id']))
     $text = 'Пришел новый update!' . json_encode($update);//
     $mes_id = $bot->sendMes(MY_ID, $text);
 }*/
+//~~~~~~~~~~~ Начало обработки апдейта типа callback_query ~~~~~~
+
+if(isset($update['callback_query']))
+{
+    $tg_user = $update['callback_query']['from'];
+    
+    $chat = $update['callback_query']['message']['chat'];
+    $callback_id = $update['callback_query']['id'];
+    $callBackData = $update['callback_query']['data'];
+    $dataBack = mb_substr($callBackData, 0, 7);
+    
+    $db = new BaseAPI;
+
+    //~~~~~~~~~~~~~~~~~~~
+    if ($dataBack == 'banuser')
+    {
+      $user_id = substr($callBackData, 7);$bot->sendMes(MY_ID, 'works');
+      $baned_user = $db->getBanedUser($user_id);
+      if(isset($baned_user->menu_id))
+      {
+        $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
+      }
+      $bot->banChatMember($baned_user->chat_id, $user_id);
+      $bot->answerCallbackQuery($callback_id,"Пользователь забанен и удален из группы.",true);
+      
+      return;
+  }
+  //~~~~~~~~~~~~~~~~~~~~~~~~
+  if ($dataBack == 'unbanus')
+  {
+      $user_id = substr($callBackData, 7);
+      $baned_user = $db->getBanedUser($user_id);
+      if(isset($baned_user->menu_id))
+      {
+        $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
+      }
+      $bot->restoreUser($baned_user->chat_id, $user_id);
+      $bot->answerCallbackQuery($callback_id, 'Пользователь  снова может писать в общую группу.',true);
+      return;
+  }
+}
+//~~~~~~~~~~~ END обработки апдейта типа callback_query ~~~~~~
 //~~~~~~~~~~~ Начало обработки апдейта типа message ~~~~~~
 if(isset($update['message']))
 {
@@ -59,28 +101,28 @@ if(isset($update['message']))
         $bot->sendMes(MY_ID, 'button_text:' . $msg['web_app_data']['button_text'] . '\n' . 'data:\n' . $msg['web_app_data']['data']);
     }
     
-    
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if ($chat_type == 'private')// Работаем в личке с ботом
-    {   //~~~~~~ Работаем с Юзером и базой ~~~
-        $base = new BaseAPI;
-        $userFromBase = $base->getUser($tg_user['id']);
-        if ($userFromBase == false)
-        {
-           $base->addUser($tg_user);
-           $userFromBase = $base->getUser($tg_user['id']);
-        }
+    {
+     //~~~~~~ Работаем с Юзером и базой ~~~
+      $base = new BaseAPI;
+      $userFromBase = $base->getUser($tg_user['id']);
+      if ($userFromBase == false)
+      {
+          $base->addUser($tg_user);
+          $userFromBase = $base->getUser($tg_user['id']);
+      }
         
        
-        $user = new User($userFromBase);
-        $user->update($tg_user);
+      $user = new User($userFromBase);
+      $user->update($tg_user);
+    
         $base->storeMessage($mes_text, $user->id, $message_id);//Сохраняем в базу текст пользователя
         //  И пересылаем сообщение в группу "Личка бота"
         $name_as_link = $user->getNameAsTgLink();
         $user_id = $user->id;
-        $bot->forwardMessage(BOT_GROUP, $chat_id,  $message_id);
         $bot->sendKeyboard(BOT_GROUP, "Боту пишет <b>$name_as_link</b> ID: $user_id", answerFromBot($user_id, $user->first_name));
-        
+        $bot->forwardMessage(BOT_GROUP, $chat_id,  $message_id);
         
         
         if (hasHello($mes_text))
@@ -133,31 +175,55 @@ if(isset($update['message']))
         }// ~~~~~~~~конец обработки команд~~~~~~~
       }   //~~~ Конец работы с сущностями~~~~~~~~~
     }//~~~~ Конец работы в приватном чате ~~~~~~~
+    
     //~~~~~~~  Проверяем чат~~~~~~~~~
     if ($chat_type != 'private') //Если чат не личка с ботом
     {
-        $mesHasEntities = false;
-        $alarmText = 'Сообщение содержит контент';
         $db = new BaseAPI;
         $db->updateChatList($chat);//Проверяем/добавляем чат
         $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
-
+        
+        $user = new User($tg_user);
+        
+        if ($user->isAdmin())// Если сообщение написал админ, - проверки не запускаем
+        {
+          return;
+        }
+        
+        $mesHasEntities = false;
+        $alarmText = '';
 
         if (isset($msg['entities']) || isset($msg['caption_entities']))
         {
           $mesHasEntities = true;
-          $alarmText = ', похожий на рекламу';
+          $alarmText = '<b>сущности</b>';
         }
-        if(mesHasBadWords($mes_text) == false){return}//выход, если сообщение чисто
-        else  //Если текст сообщения содержит слова табу
+        $badWords = mesHasBadWords($mes_text);
+        if($badWords == false && $mesHasEntities == false)
         {
-            //Сохраним юзера в черный список, удалим сообщение и забаним его
-            $bot->forwardMessage();
-            $bot->delMess($chat_id, $message_id);
-            
+          return;   //выход, если сообщение чисто
         }
+        else  //Иначе текст сообщения содержит слова табу и(или) сущности!!!
+        {
+            if (!$badWords == false)
+            {
+              $alarmText .= '...';
+              foreach ($badWords as $word) 
+              {
+                $alarmText .= ", <i><u>$word</u></i>";
+              }
+            }
+            //Сохраним юзера в черный список, удалим сообщение и забаним его
+            $bot->sendMes(ADMINS_GROUP, 'Пользователь <b>' . $user->getNameAsTgLink() . "</b> отправил $alarmText:");
+            $bot->forwardMessage(ADMINS_GROUP, $chat_id, $message_id);//пересылаем админам
+            $bot->delMess($chat_id, $message_id);//Удаляем сообщение
+            $bot->restrictUser($chat_id, $user_id);//запрещаем отправку сообщений юзеру
+            $db->saveBanData($user_id, $chat_id, $message_id, $mes_text);// Сохраняем данные в черный список
+            $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($chat_id, $user_id));
+            $db->updateBanData($user_id, $message_id, $menu_id);
+        } 
         
-       
+
     }//конец обработки неприватных чатов
     //~~~~~~~~~~~chat checked~~~~~~~~~~~~~~~~~~~~
     
