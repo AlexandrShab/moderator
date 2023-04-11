@@ -174,7 +174,16 @@ function restrictUser($chat_id, $user_id)
 { 
     $method = 'restrictChatMember';
     $chatPermissions = [
-      'can_send_messages' => false
+        'can_send_messages' => false,
+        'can_invite_users' => true,
+        'can_send_media_messages' => false,
+        'can_send_audios' => false,
+        'can_send_documents' => false,
+        'can_send_photos' => false,
+        'can_send_videos' => false,
+        'can_send_video_notes' => false,
+        'can_send_voice_notes' => false,
+        'can_send_other_messages' => false,
     ];
     $data = [
           'chat_id' => $chat_id,
@@ -194,7 +203,15 @@ function restrictUser($chat_id, $user_id)
         $method = 'restrictChatMember';
         $chatPermissions = [
             'can_send_messages' => true,
-            'can_invite_users' => true
+            'can_invite_users' => true,
+            'can_send_media_messages' =>true,
+            'can_send_audios' => true,
+            'can_send_documents' =>true,
+            'can_send_photos' =>true,
+            'can_send_videos' =>true,
+            'can_send_video_notes' =>true,
+            'can_send_voice_notes' =>true,
+            'can_send_other_messages' => true,
         ];
         $data = [
             'chat_id' => $chat_id,

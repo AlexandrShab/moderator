@@ -8,9 +8,9 @@ exit();
 }
  //define('TELEGA_URL', 'https://api.telegram.org/bot' . TOKEN);
   define('MY_ID','968407066');
-  define('BOT_GROUP', '-1001860899757');   //Bot_privateMessages
+  define('BOT_GROUP',    '-1001860899757');   //Bot_privateMessages
   define('ADMINS_GROUP', '-1001822311523');   //info From Bots  
-  define('WORK_GROUP', '-1001985844919'); //рабочая группа (тестовая)
+  define('WORK_GROUP',   '-1001985844919'); //рабочая общая группа (тестовая)
   define('BOT_NAME','@Moder_TopBot');
   
 require_once __DIR__ . '/autoload.php';
@@ -180,6 +180,7 @@ if(isset($update['message']))
     if ($chat_type != 'private') //Если чат не личка с ботом
     {
         $db = new BaseAPI;
+        $bot->sendMes(MY_ID, $chat['id']);
         $db->updateChatList($chat);//Проверяем/добавляем чат
         $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
         
@@ -220,7 +221,7 @@ if(isset($update['message']))
             $bot->restrictUser($chat_id, $user_id);//запрещаем отправку сообщений юзеру
             $db->saveBanData($user_id, $chat_id, $message_id, $mes_text);// Сохраняем данные в черный список
             $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($chat_id, $user_id));
-            $bot->sendMes(MY_ID, $menu_id);
+            
             $db->updateBanData($user_id, $message_id, $menu_id);
         } 
         
