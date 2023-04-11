@@ -119,19 +119,19 @@ class BaseAPI
         $res = $data->execute();
         return $res;
     }
-    public function saveBanData($user_id, $chat_id, $mes_id, $mes_text)
+    public function saveBanData($user_id, $chat_id, $mes_text)
     {
         $base = new Connect;
-        $query = "INSERT INTO black_list (user_id, chat_id, mes_id, mes_text) VALUES ('$user_id', '$chat_id','$mes_id', '$mes_text');";
+        $query = "INSERT INTO black_list (user_id, chat_id, mes_text) VALUES ('$user_id', '$chat_id', '$mes_text');";
         $data = $base->prepare($query);
         $res = $data->execute();
         return $res;
     }
-    public function updateBanData($user_id, $message_id, $menu_id)
+    public function updateBanData($user_id, $chat_id, $menu_id)
     {
         $base = new Connect;
         $query = "UPDATE black_list SET menu_id = '$menu_id' 
-                WHERE chat_id = '$chat_id' AND user_id = '$user_id' user_id = '$user_id';";
+                WHERE chat_id = '$chat_id' AND user_id = '$user_id';";
         $data = $base->prepare($query);
         $res = $data->execute();
         return $res;
