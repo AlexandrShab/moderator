@@ -10,7 +10,7 @@ exit();
   define('MY_ID','968407066');
   define('BOT_GROUP', '-1001860899757');   //Bot_privateMessages
   define('ADMINS_GROUP', '-2147483648');   //info From Bots  
-  define('WORK_GROUP', '-1001985844919'); //рабочая группа (тестовая)
+  define('WORK_GROUP', '-2147483648'); //рабочая группа (тестовая)
   define('BOT_NAME','@Moder_TopBot');
   
 require_once __DIR__ . '/autoload.php';
