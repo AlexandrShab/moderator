@@ -2,6 +2,36 @@
 require_once __DIR__ . '/Connect.php';
 class BaseAPI
 {
+    public function updateChatList($chat)
+    {
+        $id = $chat['id'];
+        $title = $chat['title'];
+        $username = $chat['username'];
+        $type = $chat['type'];
+        $db = new Connect;
+        $query = "INSERT INTO chats (id, title, username, type) VALUES ('$id', '$title', '$username', '$type') 
+            ON DUPLICATE KEY UPDATE title = '$title', username = '$username', type = '$type';";
+
+        $data = $db->prepare($query);
+        $data->execute();
+        
+        return true;
+    }
+    public function getChatList()
+    {
+        $base = new Connect;
+        $query = "SELECT * FROM chats";
+        $data = $base->prepare($query);
+        $data->execute();
+        $arrChats = array();
+        $i=0;
+        while($chat = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $arrChats[$i] = $chat;
+            $i++;
+        }
+        return $arrChats;
+    }
     public static function getToken()
     {
         $base = new Connect;
@@ -38,7 +68,7 @@ class BaseAPI
     public function addUser($user)
     {
         $db = new Connect;
-        $id = $user["id"];
+        $id = $user["id"] ;
         $first_name = $user["first_name"];
         $last_name = $user["last_name"];
         $username = $user["username"];
@@ -47,26 +77,26 @@ class BaseAPI
         $data->execute();
         return true;
     }
-    public function addProduct($prod, $doc_type)
+    public function addWord($word)
     {
          $db = new Connect;
-         $query = "INSERT INTO products (name, doc_type) VALUES ('$prod', '$doc_type');";
+         $query = "INSERT INTO bad_words (word) VALUES ('$word');";
         $data = $db->prepare($query);
         $data->execute();
         return true;
     }
-    public function getAllProducts()
+    public function getBadWords()
     {
         $base = new Connect;
-        $query = "SELECT * FROM products";
+        $query = "SELECT * FROM bad_words";
         $data = $base->prepare($query);
         $data->execute();
-        $products = array();
-        while($product = $data->fetch(PDO::FETCH_OBJ))
+        $words = array();
+        while($word = $data->fetch(PDO::FETCH_OBJ))
         {
-            $products[] = $product;
+            $words[] = $word;
         }
-        return $products;
+        return $words;
     }
     public function findProd($sample)
     {
@@ -80,5 +110,77 @@ class BaseAPI
             $products[] = $product;
         }
         return $products;
+    }
+    public function storeMessage($text, $user_id,  $mes_id)
+    {
+        $base = new Connect;
+        $query = "INSERT INTO users_chats (user_id, message_id, text) VALUES ('$user_id', '$mes_id', '$text');";
+        $data = $base->prepare($query);
+        $res = $data->execute();
+        return $res;
+    }
+   
+    public function getPrivateMessages()
+    {
+        $base = new Connect;
+        $query = "SELECT * FROM users_chats ORDER BY date DESC;";
+        $data = $base->prepare($query);
+        $data->execute();
+        $res = array();
+        $i = 0;
+        while($req = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $res[$i] = $req;
+            $i++;
+        }
+        
+        return $res;
+    }
+    public function addChatMember($user_id, $chat_id)
+    {
+        $base = new Connect;
+        $query = "SELECT * FROM chat_members WHERE id='$user_id';";
+        $data = $base->prepare($query);
+        $data->execute();
+        $res = array();
+        $memberOfChat = false;
+        $i = 0;
+        while($req = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $res[$i] = $req;
+            $i++;
+            if ($req->chat_id == $chat_id)
+            {
+                $memberOfChat = true;
+            }
+        }
+        if ($i == 0 || $memberOfChat == false)// Если юзера нет в таблице или нет в текущем чате
+        {
+            $query = "INSERT INTO chat_members (id, chat_id) VALUES ('$user_id', '$chat_id');";
+            $data = $base->prepare($query);
+            $data->execute();
+        }else
+        {
+            $now = date("Y-m-d H:i:s");
+            $query = "UPDATE chat_members SET last_date = '$now' WHERE id ='$user_id' AND chat_id = '$chat_id';";
+            $data = $base->prepare($query);
+            $data->execute();
+        }
+        return true;
+    }
+    public function getChatMembers()
+    {
+      $base = new Connect;
+         $query = "SELECT * FROM chat_members ORDER BY first_date DESC;";
+        $data = $base->prepare($query);
+        $data->execute();
+        $res = array();
+        $i = 0;
+        while($req = $data->fetch(PDO::FETCH_OBJ))
+        {
+            $res[$i] = $req;
+            $i++;
+        }  
+        return $res;
     }
 }   

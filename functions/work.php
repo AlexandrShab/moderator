@@ -1,5 +1,27 @@
 <?php
-
+function mesHasBadWords($userMessage)
+{
+    $db = new BaseAPI;  
+    $words = $db->getBadWords();// Получаем из базы массив со словами
+    $sample = mb_strtolower($userMessage, 'UTF-8'); //Перевод текста сообщения в нижний регистр
+    $arrFinded = [];
+    for($i=0;$i<count($words);$i++)
+    {
+        if(strpos($sample, $words[i]) > -1)
+        {
+            $arrFinded[] = $words[i];
+        }
+    }
+    if(count($arrFinded)>0)
+    {
+        return $arrFinded;
+    }
+    return false;
+}
+function test()
+{
+return 'Work file works';
+}
 function hasHello($sample)
 {
     $sample = mb_strtolower($sample, 'UTF-8');
@@ -39,7 +61,8 @@ function writeToExpertKeyboard()
     ];
     return $keyboard;
 }
-function mainMenuKeys(){
+function mainMenuKeys()
+{
     $keyboard = [
         'resize_keyboard' => true,
         'keyboard' => [
@@ -103,4 +126,14 @@ function adminMenu()
           ],
     ];
     return $keyboard;
+}
+function answerFromBot($chat_id, $name)
+{
+     $keyboard = [
+        'inline_keyboard' =>
+          [
+      [['text'=> 'Ответить ботом','url' => "http://bot.shinny-mir.by/admin-serv.php?method=sendMessage&chat_id=$chat_id&name=$name"]],
+            ],
+    ];
+    return $keyboard;   
 }
