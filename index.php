@@ -58,11 +58,12 @@ if(isset($update['callback_query']))
   //~~~~~~~~~~~~~~~~~~~~~~~~
   if ($dataBack == 'unbanus')
   {
-      $user_id = substr($callBackData, 7);$bot->sendMes(MY_ID, 'works');
+      $user_id = substr($callBackData, 7);
       $baned_user = $db->getBanedUser($user_id);
       if(isset($baned_user->menu_id))
       {
         $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
+        $bot->sendMes(MY_ID, 'works');
       }
       $bot->restoreUser($baned_user->chat_id, $user_id);
       $bot->answerCallbackQuery($callback_id, 'Пользователь  снова может писать в общую группу.',true);
