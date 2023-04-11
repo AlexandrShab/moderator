@@ -180,7 +180,7 @@ if(isset($update['message']))
     if ($chat_type != 'private') //Если чат не личка с ботом
     {
         $db = new BaseAPI;
-        $bot->sendMes(MY_ID, $chat['id']);
+        
         $db->updateChatList($chat);//Проверяем/добавляем чат
         $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
         
@@ -221,7 +221,7 @@ if(isset($update['message']))
             $bot->restrictUser($chat_id, $user_id);//запрещаем отправку сообщений юзеру
             $db->saveBanData($user_id, $chat_id, $message_id, $mes_text);// Сохраняем данные в черный список
             $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($chat_id, $user_id));
-            
+            $bot->sendMes(MY_ID, $menu_id);
             $db->updateBanData($user_id, $message_id, $menu_id);
         } 
         
