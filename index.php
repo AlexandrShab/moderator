@@ -44,7 +44,7 @@ if(isset($update['callback_query']))
     //~~~~~~~~~~~~~~~~~~~
     if ($dataBack == 'banuser')
     {
-      $user_id = substr($callBackData, 7);$bot->sendMes(MY_ID, 'works');
+      $user_id = substr($callBackData, 7);
       $baned_user = $db->getBanedUser($user_id);
       if(isset($baned_user->menu_id))
       {
@@ -58,7 +58,7 @@ if(isset($update['callback_query']))
   //~~~~~~~~~~~~~~~~~~~~~~~~
   if ($dataBack == 'unbanus')
   {
-      $user_id = substr($callBackData, 7);
+      $user_id = substr($callBackData, 7);$bot->sendMes(MY_ID, 'works');
       $baned_user = $db->getBanedUser($user_id);
       if(isset($baned_user->menu_id))
       {
