@@ -5,6 +5,7 @@ require_once __DIR__ . '/autoload.php';
 //var_dump($_COOKIE);
 
 define('BOT_USERNAME', 'Moder_TopBot'); // place username of your bot here
+define('BOT_GROUP', '-973581514');
 
 if (isset($_GET['logout'])) {
   setcookie('tg_user', '');
@@ -88,24 +89,79 @@ $tg_user = getTelegramUserData();
             padding: 5px;
             border: solid gray 1px;
         }
-        .admin-menu {
-            text-align: center;
-            position: fixed;
-            background-color: rgb(255,255,255);
-            width: max-content;
-            box-shadow: 10px 5px 20px gray;
-            
-        }
-        .menu-item {
-            padding: 20px;
-        }
-        .menu-item:hover, .menu-item:active {
-            background-color: rgb(200,200,200);
-        }
-        .menu-item a{
-            text-decoration:none;
-            color:black;
-        }
+        /* Меню боковой панели */
+      .slidepanel {
+        /*margin-left: -500px;*/
+        min-height: max-content;
+        width: 0;
+        height: 100%; /* Укажите высоту */
+        position: fixed; /* Оставаться на месте */
+        z-index: 1; /* Оставайтесь на вершине */
+        top: 0;
+        left: 0;
+        background-color: RGBA(0,0,0,0.93); /* Черный */
+        overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+        padding-top: 60px; /* Поместите содержимое 60px сверху */
+        transition: 0.8s; /* 0.5 секунды эффект перехода для скольжения в боковой панели */
+      }
+
+      /* Боковая панель ссылок */
+      .slidepanel a {
+        padding: 8px 8px 15px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+      }
+
+      /* При наведении курсора мыши на навигационные ссылки измените их цвет */
+      .slidepanel a:hover {
+        color: #a7a7a7;
+        background-color: #444;
+      }
+
+      /* Положение и стиль кнопки закрытия (верхний правый угол) */
+      .slidepanel .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        color: #ffffff;
+      }
+
+      /* Стиль кнопка, которая используется для открытия боковой панели */
+      .openbtn {
+        margin-bottom: 20px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+      }
+
+      .openbtn:hover {
+        background-color: #444;
+      }
+      .closebtn:hover {
+        cursor: pointer;
+        color: #a7a7a7;
+      }
+      .row_of_list {
+        padding:10px;
+        border: solid lightgray 1px;
+        border-radius:10px;
+        margin: 8px;
+      }
+      li{
+        list-style-type: none;
+      }
+      li:hover{
+        box-shadow: 5px 5px 10px black;
+        translate: 0 3px;
+      }
     </style>
     
 </head>
@@ -117,7 +173,7 @@ $tg_user = getTelegramUserData();
     
     //~~~~~~~~~
     if ($tg_user !== false) {
-        if ($tg_user->isAdmin == '1'){$isAdmin = true;}//~~~~~~~~~Check isAdmin~~~~~~~~~~~~~~~~~~~~~~
+        if ($tg_user->is_admin == '1'){$isAdmin = true;}//~~~~~~~~~Check isAdmin~~~~~~~~~~~~~~~~~~~~~~
         //var_dump($tg_user);
       $first_name = htmlspecialchars($tg_user->first_name);
       //$html .= "<name style=\"float:right;\">{$first_name}</name>";
@@ -151,7 +207,7 @@ $tg_user = getTelegramUserData();
     
 ?>
     <div class="brand" style="backgroundColor: black;">
-        <text>SertSale_bot</text>
+        <text>Moder_TopBot</text>
     </div>
     
 <?php
@@ -160,38 +216,102 @@ $tg_user = getTelegramUserData();
 ?>
     <div id="content">
         <p1 class="main-title">Страница администратора</p1>
-        <div id="burger" style="visibility:visible;">
-            <button id="btn" style="margin: 20px"
-            onclick="showMenu()">Меню Администратора</button>
-       </div>
-       <div id="admin-menu" class="admin-menu" style="visibility:hidden;">
+        <button class="openbtn" onclick="openNav()">&#9776; Меню</button>
+        <div id="mySlidepanel" class="slidepanel">
+            <div class="closebtn" onclick="closeNav()">&times;</div>
+       
+       
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getUsers"><text>Пользователи бота</text></a>
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getUsers">
+                    <text>Пользователи бота</text></a>
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getAdmins"><text>Администраторы бота</text></a>
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getAdmins"><text>Администраторы бота</text></a>
               
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getRequests">
-                <text>Запросы по поиску</text></a>
+            <a href="#" onclick="closeNav();getMessages()">
+                <text>Сообщения в личку боту</text></a>
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getActions">
-                <text>Акции и участники</text></a>
+                <a href="#" onclick="closeNav();getChats();">
+                <text>Чаты с Модератором</text></a>
             </div>
             <div class="menu-item">
-                <a href="https://sertbot.shinny-mir.by/admin-serv.php?method=getProducts">
-                <text>Редактор товаров базы</text></a>
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getBlackList">
+                <text>Черный список</text></a>
             </div>
-       </div>
+            <div class="menu-item">
+                <a href="https://bot.shinny-mir.by/admin-serv.php?method=getWords">
+                <text>Редактор Запрещенных слов</text></a>
+            </div>
+        </div>
+       <div id="data">
+                
+        </div>
        <script>
-        function showMenu(){
-           let menuState = document.getElementById('admin-menu').style.visibility;
-           if (menuState == 'hidden'){
-            menuState = 'visible';
-           } else{menuState ='hidden'}
-           document.getElementById('admin-menu').style.visibility = menuState;
+        /* Установите ширину боковой панели на 250 пикселей (показать его) */
+      function openNav() {
+        document.getElementById("mySlidepanel").style.width = "100%";
+      }
+
+      /* Установите ширину боковой панели в 0 (скройте ее) */
+      function closeNav() {
+        document.getElementById("mySlidepanel").style.width = "0%";
+      }
+      async function getRequests(){
+            let list = document.getElementById('list');
+            if(list) {list.innerHTML = ''}
+            let res = await fetch("https://bot.shinny-mir.by/server.php?method=getRequests");
+            let chats = await res.json();
+            
+            let elemForInsert = document.getElementById('data');
+            elemForInsert.innerHTML = '';
+            let htmlForInsert = `<h3>Количество запросов всего: ${chats.length}</h3>`;
+            elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
+            for(let i=0;i<chats.length;i++){
+                let row = `<li class="row_of_list" id="${chats[i].id}">
+                <strong>${chats[i].date}</strong> (ID:${chats[i].id})<br/><strong> - ${chats[i].title}</strong> 
+                <br/>Тип: ${chats[i].type}
+                </li>`;
+              
+                elemForInsert.insertAdjacentHTML('beforeend', row)
+            }
+        }
+        async function getMessages(){
+            let list = document.getElementById('list');
+            if(list) {list.innerHTML = ''}
+            let res = await fetch("https://bot.shinny-mir.by/server.php?method=getMessages");
+            let messages = await res.json();
+            console.log(messages);
+            let elemForInsert = document.getElementById('data');
+            elemForInsert.innerHTML = '';
+            let htmlForInsert = `<h3>Количество сообщений всего: ${messages.length}</h3>`;
+            elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
+            for(let i=0;i<messages.length;i++){
+                let row = `<li class="row_of_list" id="${messages[i].messasge_id}">
+                <strong>${messages[i].date}</strong> (ID:${messages[i].user_id})<br/> - ${messages[i].text}
+                </li>`;
+                elemForInsert.insertAdjacentHTML('beforeend', row)
+            }
+        }
+        async function getChats(){
+            let list = document.getElementById('list');
+            if(list) {list.innerHTML = ''}
+            let res = await fetch("https://bot.shinny-mir.by/server.php?method=getChats");
+            let chats = await res.json();
+            console.log(chats);
+            let elemForInsert = document.getElementById('data');
+            elemForInsert.innerHTML = '';
+            let htmlForInsert = `<h3>Количество чатов с Модератором всего: ${chats.length}</h3>`;
+            elemForInsert.insertAdjacentHTML('beforeend', htmlForInsert)
+            for(let i=0;i<chats.length;i++){
+                let row = `<li class="row_of_list" id="${chats[i].id}">
+                <strong>${chats[i].date}</strong> (ID:${chats[i].id})<br/><strong> - ${chats[i].title}</strong> 
+                <br/>Тип: ${chats[i].type}
+                </li>`;
+                elemForInsert.insertAdjacentHTML('beforeend', row)
+            }
         }
        </script>
 <?php
@@ -289,7 +409,7 @@ if (isset($_GET['method']))
         
        
     }
-    if($_GET['method'] == 'admin') 
+    if($_GET['method'] == 'admin') //изменение статуса админ/не админ
     {
         //var_dump($_GET);
         $id = $_GET['user_id'];
@@ -327,8 +447,10 @@ if (isset($_POST['method']))
             $chat_id = $_POST['chat_id'];
             $text = $_POST['text'];
             $name = $_POST['name'];
-            $bot = new Telega;
+            $sender = $tg_user->first_name;
+            $bot = new TBot;
             $bot->sendMes($chat_id, $text);
+            $bot->sendMes(BOT_GROUP, "Пользователю <b>$name</b> ответил $sender:\n" . $text);
             echo "<h1>Сообщение для <em>$name</em> oтправлено...</h1>$text";
         }
 }
@@ -360,11 +482,11 @@ function getTelegramUserData() {
      </div><!-- конец класса content-->
      <script>
         function sendMesage(user_id, name){
-            let link = "https://sertbot.shinny-mir.by/admin-serv.php?method=sendMessage&chat_id=" + user_id + "&name=" + name;
+            let link = "https://bot.shinny-mir.by/admin-serv.php?method=sendMessage&chat_id=" + user_id + "&name=" + name;
             document.location.href=link;
         }
         function admin(user_id, adm){
-            let link = "https://sertbot.shinny-mir.by/admin-serv.php?method=admin&user_id="+user_id+"&set=" + adm;
+            let link = "https://bot.shinny-mir.by/admin-serv.php?method=admin&user_id="+user_id+"&set=" + adm;
             document.location.href=link;
         }
      </script>   

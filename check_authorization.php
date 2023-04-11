@@ -1,8 +1,12 @@
 <?php
-
-//define('BOT_TOKEN', ''); // ModerTop_Bot token 
+require_once __DIR__ . '/autoload.php';
+  $db = new BaseAPI;
+  $token = $db->getToken();
+  define('BOT_TOKEN', $token); // ModerTop_Bot token 
 
 function checkTelegramAuthorization($auth_data) {
+
+
   $check_hash = $auth_data['hash'];
   unset($auth_data['hash']);
   $data_check_arr = [];
