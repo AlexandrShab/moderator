@@ -29,7 +29,7 @@ class User
         return true;
     }
     
-    public function checkAdmin()
+    public function isAdmin()
     {
         $base = new Connect;
         $query = "SELECT is_admin FROM users WHERE id ='$this->id' LIMIT 1";
@@ -55,7 +55,10 @@ class User
     }
     //~~~~~~~~~~~~~~~~~~~~
 
-
+    /**
+     * Возвращает имя пользователя в виде ссылки
+     * @return string name + lastMame
+     */
     public function getNameAsTgLink()
     {
             $name = "";

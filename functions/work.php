@@ -7,9 +7,9 @@ function mesHasBadWords($userMessage)
     $arrFinded = [];
     for($i=0;$i<count($words);$i++)
     {
-        if(strpos($sample, $words[i]) > -1)
+        if(strpos($sample, $words[$i]) > -1)
         {
-            $arrFinded[] = $words[i];
+            $arrFinded[] = $words[$i];
         }
     }
     if(count($arrFinded)>0)
@@ -17,10 +17,6 @@ function mesHasBadWords($userMessage)
         return $arrFinded;
     }
     return false;
-}
-function test()
-{
-return 'Work file works';
 }
 function hasHello($sample)
 {
@@ -136,4 +132,15 @@ function answerFromBot($chat_id, $name)
             ],
     ];
     return $keyboard;   
+}
+function banKeyboard($chat_id, $user_id)
+{
+    $keyboard = [
+        'inline_keyboard' =>
+          [
+      [['text' => 'Выгнать', 'callback_data' => "banuser$user_id"],
+      ['text' => 'Снять запрет', 'callback_data' => "unbanus$user_id"]],
+          ],
+    ];
+    return $keyboard;
 }

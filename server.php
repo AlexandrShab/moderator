@@ -23,4 +23,7 @@
         exit;
     }
   }
-                                                                                                                                                                                                                                                                                                                      
+
+$db = new BaseAPI;
+$words = $db->getBadWords();
+print_r($words);

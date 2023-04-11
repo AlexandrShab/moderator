@@ -471,7 +471,7 @@ function getTelegramUserData() {
           
           $user->addTobase();
       }*/
-      $user->checkAdmin();
+      $user->isAdmin();
         
       return $user;
     }

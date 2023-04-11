@@ -3,17 +3,25 @@
 class TBot
 {
     
-    public $telega_url;
+    public static $telega_url;
     
     public function __construct()
     {
         $base = new BaseAPI;
         $token = 'https://api.telegram.org/bot' .  $base->getToken();
         define('TELEGA_URL', $token);
-        //print_r(TELEGA_URL);
+        SELF::$telega_url = TELEGA_URL;
     }
-    
-    function sendMes($chat_id, $text) //возвращает message_id
+    /**
+     * Отправка сообщения в телеграм
+     *      возвращает id оправленного сообщения
+     * 
+     * @param string $chat_id (идентификатор чата)
+     * @param string $text (текст сообщения)
+     * 
+     * @return :id отправленного сообщения
+     */
+    function sendMes($chat_id, $text) :string //$mes_id
     {
         $method = 'sendMessage';
         $data_to_send = [
@@ -24,7 +32,14 @@ class TBot
         $res = $this->sendPost($method, $data_to_send);
         return $res['result']['message_id'];
     }
-    
+    /**
+     * Отправка сообщения в телеграм с клавиатурой
+     * @param string $chat_id (идентификатор чата)
+     * @param string $text текст сообщения
+     * @param \keyboard объект клавиатуры (массив строк с массивом кнопок)
+     * 
+     * @return \res ответ от телеги
+     */
     function sendKeyboard($chat_id, $text, $keyboard)
     {
         $method = 'sendMessage';
@@ -35,7 +50,11 @@ class TBot
                             'reply_markup' => $keyboard,
                         ];
         $res = $this->sendPost($method, $data_to_send);
-        //return $res['result']['message_id'];
+        if(isset($keyboard['inline_keyboard']))
+        {
+            return $res['result']['message_id'];
+        }
+        return true;
     }
     function answerCallbackQuery($callback_id, $text, $alert)
     {
@@ -53,6 +72,13 @@ class TBot
         $this->sendPost('sendChatAction', $data);
     }
     //~~~~~~~~~~~~~~~~~~~~
+    /**
+     * Отправка поста в телеграм 
+     * @param string $method (метод телеграм)
+     * @param array $data (массив с отправляемыми параметрами/данными)
+     * @param array $headers (дополнительные заголовки)
+     * 
+     */
     function sendPost($method, $data, $headers = [])
     {
         $curl = curl_init();
@@ -71,7 +97,16 @@ class TBot
 
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function forwardMessage($chat_id, $chatFrom, $mes_id)
+  /**
+   * Пересылка сообщения из одного чата в другой по mess_id
+   * 
+   * @param string $chat_id (чат куда)
+   * @param string $chatFrom (чат откуда)
+   * @param string $mes_id (id сообщения)
+   * 
+   * @return \res - ответ от сервера Телеграм
+   */
+  function forwardMessage($chat_id, $chatFrom, $mes_id)
     {
         $data['chat_id'] = $chat_id;
         $data['from_chat_id'] = $chatFrom;
@@ -79,7 +114,14 @@ class TBot
         $res = $this->sendPost("forwardMessage", $data);
         return $res;
     }
-    function delMess($chat_id,$mes_id)
+    /**
+     * Удаление сообщения 
+     * @param string ID чата сообщения
+     * @param string mes_id сообщения
+     * 
+     * @return \res - ответ от сервера Телеграм
+     */
+    function delMess($chat_id, $mes_id)
     {
         $data['chat_id'] = $chat_id;
         $data['message_id'] = $mes_id;
@@ -123,20 +165,58 @@ class TBot
         $res = $this->sendPost('getChatMember', $data);
         return $res['result']['user'];
     }
+/**
+ * ограничение пользователя в выбранном чате
+ * @param string $chat_id
+ * @param string $user_id
+ */
+function restrictUser($chat_id, $user_id)
+{ 
+    $method = 'restrictChatMember';
+    $chatPermissions = [
+      'can_send_messages' => false
+    ];
+    $data = [
+          'chat_id' => $chat_id,
+          'user_id' => $user_id,
+          'permissions' => $chatPermissions
+    ];
+    $res = $this->sendPost($method, $data);
+    return $res;
+  }
+    /**
+     * воостановление прав пользователя в выбранном чате
+     * @param string $chat_id
+     * @param string $user_id
+     */
+    function restoreUser($chat_id, $user_id)
+    {    
+        $method = 'restrictChatMember';
+        $chatPermissions = [
+            'can_send_messages' => true,
+            'can_invite_users' => true
+        ];
+        $data = [
+            'chat_id' => $chat_id,
+            'user_id' => $user_id,
+            'permissions' => $chatPermissions
+      ];
+        $res = $this->sendPost($method, $data);
+        return $res;
+    }
+    /**
+     * забанить пользователя в выбранном чате
+     * @param string $chat_id
+     * @param string $user_id
+     */
+    function banChatMember($chat_id, $user_id)
+    {
+        $method = 'banChatMember';
+        $data = [
+                'chat_id' => $chat_id,
+                'user_id' => $user_id,
+        ];
+        $res = $this->sendPost($method, $data);
+        return $res;
+    }
 }
-/*
-"result":{"id":968407066,
-            "first_name":"Alex",
-            "last_name":"\ud83c\udf97",
-            "username":"BlrAlex",
-            "type":"private",
-            "active_usernames":["BlrAlex"],
-            "emoji_status_custom_emoji_id":"5418063924933173277",
-            "bio":"\u041d\u0435\u043c\u043d\u043e\u0433\u043e \u0437\u043d\u0430\u044e \u043e \u0431\u043e\u0442\u0430\u0445",
-            "photo":{"small_file_id":"AQADAgADsqcxGxq4uDkACAIAAxq4uDkABKHaFiJLtdCaLwQ",
-                    "small_file_unique_id":"AQADsqcxGxq4uDkAAQ",
-                    "big_file_id":   "AQADAgADsqcxGxq4uDkACAMAAxq4uDkABKHaFiJLtdCaLwQ",
-                    "big_file_unique_id":"AQADsqcxGxq4uDkB"
-                }
-        }
-        */
