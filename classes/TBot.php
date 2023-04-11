@@ -223,6 +223,7 @@ function restrictUser($chat_id, $user_id)
     }
     /**
      * забанить пользователя в выбранном чате
+     * юзер не сможет вернуться сам
      * @param string $chat_id
      * @param string $user_id
      */
@@ -232,6 +233,25 @@ function restrictUser($chat_id, $user_id)
         $data = [
                 'chat_id' => $chat_id,
                 'user_id' => $user_id,
+        ];
+        $res = $this->sendPost($method, $data);
+        return $res;
+    }
+    /**
+     * разабанить пользователя в выбранном чате.
+     * если он все еще участник, выгонит без блокировки
+     * @param string $chat_id
+     * @param string $user_id
+     * @param bool $only_if_banned
+     */
+    function unbanChatMember($chat_id, $user_id, $only_if_banned)
+    {
+        $method = 'unbanChatMember';
+
+        $data = [
+                'chat_id' => $chat_id,
+                'user_id' => $user_id,
+                'only_if_banned' => $only_if_banned,
         ];
         $res = $this->sendPost($method, $data);
         return $res;
