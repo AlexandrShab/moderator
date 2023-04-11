@@ -8,9 +8,9 @@ exit();
 }
  //define('TELEGA_URL', 'https://api.telegram.org/bot' . TOKEN);
   define('MY_ID','968407066');
-  define('BOT_GROUP', '-973581514');   //Bot_privateMessages
-  define('ADMINS_GROUP', '-815687936');   //info From Bots  
-  define('WORK_GROUP', '-887008436'); //рабочая группа (тестовая)
+  define('BOT_GROUP', '-1001860899757');   //Bot_privateMessages
+  define('ADMINS_GROUP', '-2147483648');   //info From Bots  
+  define('WORK_GROUP', '-1001985844919'); //рабочая группа (тестовая)
   define('BOT_NAME','@Moder_TopBot');
   
 require_once __DIR__ . '/autoload.php';
