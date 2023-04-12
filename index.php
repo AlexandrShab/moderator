@@ -61,8 +61,9 @@ if(isset($update['callback_query']))
   if ($dataBack == 'unbanus')
   {
       $ban_id = substr($callBackData, 7);
+      $bot->sendMes($chat['id'], "ban_id = $ban_id");
       $baned_user = $db->getBanedUser($ban_id);
-      
+      $bot->sendMes(json_encode($baned_user));
       if(isset($baned_user->menu_id))
       {
         //здесь нужно отредактировать сообщение
