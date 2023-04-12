@@ -52,7 +52,7 @@ if(isset($update['callback_query']))
       {
         $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
       }
-      $bot->banChatMember($baned_user->chat_id, $baned_user->$user_id);
+      $bot->banChatMember($baned_user->chat_id, $baned_user->user_id);
       $bot->answerCallbackQuery($callback_id,"Пользователь забанен и удален из группы.",true);
       
       return;
