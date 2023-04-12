@@ -233,7 +233,7 @@ if(isset($update['message']))
             $bot->delMess($chat_id, $message_id);//Удаляем сообщение
             $bot->restrictUser($chat_id, $user_id);//запрещаем отправку сообщений юзеру
             
-            $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($chat_id, $user_id, $ban_id));
+            $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($ban_id));
             
             $db->updateBanData($user_id, $chat_id, $message_id, $menu_id);
             $bot->sendMes(MY_ID, $menu_id);// проверка
