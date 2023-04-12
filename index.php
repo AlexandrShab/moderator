@@ -60,12 +60,19 @@ if(isset($update['callback_query']))
   {
       $user_id = substr($callBackData, 7);
       $baned_user = $db->getBanedUser($user_id);
+      
+      $user_fromDB = $db->getUser($user_id);
+      $user = new User($user_fromDB); // Объект юзера из базы
       if(isset($baned_user->menu_id))
       {
+        //здесь нужно отредактировать сообщение
+        //добавить инфу о том, что сделали с пользователем
         $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
-        $bot->sendMes(MY_ID, 'works');
+        //$bot->sendMes(MY_ID, 'works');
       }
-      $bot->restoreUser($baned_user->chat_id, $user_id);
+      $bot->restoreUser($baned_user->chat_id, $user_id);//воостанавливаем права пользователю
+      $chat_r = $db->getChatById($baned_user->chat_id);//данные чата
+
       $bot->answerCallbackQuery($callback_id, 'Пользователь  снова может писать в общую группу.',true);
       return;
   }
@@ -101,23 +108,19 @@ if(isset($update['message']))
     {
         $bot->sendMes(MY_ID, 'button_text:' . $msg['web_app_data']['button_text'] . '\n' . 'data:\n' . $msg['web_app_data']['data']);
     }
-    
+    //~~~~~~ Работаем с Юзером и базой ~~~
+    $base = new BaseAPI;
+    $userFromBase = $base->getUser($tg_user['id']);
+    if ($userFromBase == false)
+    {
+        $base->addUser($tg_user);
+        $userFromBase = $base->getUser($tg_user['id']);
+    }
+    $user = new User($userFromBase);
+    $user->update($tg_user);
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if ($chat_type == 'private')// Работаем в личке с ботом
-    {
-     //~~~~~~ Работаем с Юзером и базой ~~~
-      $base = new BaseAPI;
-      $userFromBase = $base->getUser($tg_user['id']);
-      if ($userFromBase == false)
-      {
-          $base->addUser($tg_user);
-          $userFromBase = $base->getUser($tg_user['id']);
-      }
-        
-       
-      $user = new User($userFromBase);
-      $user->update($tg_user);
-    
+    {    
         $base->storeMessage($mes_text, $user->id, $message_id);//Сохраняем в базу текст пользователя
         //  И пересылаем сообщение в группу "Личка бота"
         $name_as_link = $user->getNameAsTgLink();
@@ -185,7 +188,7 @@ if(isset($update['message']))
         $db->updateChatList($chat);//Проверяем/добавляем чат
         $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
         
-        $user = new User($tg_user);
+        
         
         if ($user->isAdmin())// Если сообщение написал админ, - проверки не запускаем
         {

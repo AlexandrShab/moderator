@@ -17,6 +17,14 @@ class BaseAPI
         
         return true;
     }
+    public function getChatById ($chat_id)
+    {
+        $query = "SELECT * FROM chats WHERE id = '$chat_id' LIMIT 1";
+        $data = $base->prepare($query);
+        $data->execute();
+        $chat = $data->fetch(PDO::FETCH_OBJ);
+        return $chat;
+    }
     public function getChatList()
     {
         $base = new Connect;
@@ -55,6 +63,10 @@ class BaseAPI
         }
         return $arrUsers;
     }
+    /**
+     * Возвращает юзера по ID в виде массива 
+     * @param $user_id
+     */
     public function getUser($id)
     {
         $db = new Connect;
@@ -62,8 +74,7 @@ class BaseAPI
         $data = $db->prepare("SELECT * FROM users WHERE id ='$id' LIMIT 1");
         $data->execute();
         $user = $data->fetch(PDO::FETCH_ASSOC);
-        
-        return $user; 
+            return $user;               
     }
     public function addUser($user)
     {

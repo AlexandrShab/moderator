@@ -25,5 +25,8 @@
   }
 
 $db = new BaseAPI;
-$words = $db->getBadWords();
-print_r($words);
+$baned_user = $db->getBanedUser('968407066');
+$dump = var_dump($baned_user);
+echo "<pre>$dump</pre>";
+
+
