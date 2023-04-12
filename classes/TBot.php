@@ -12,6 +12,30 @@ class TBot
         define('TELEGA_URL', $token);
         SELF::$telega_url = TELEGA_URL;
     }
+        //~~~~~~~~~~~~~~~~~~~~
+    /**
+     * Отправка поста в телеграм 
+     * @param string $method (метод телеграм)
+     * @param array $data (массив с отправляемыми параметрами/данными)
+     * @param array $headers (дополнительные заголовки)
+     * 
+     */
+    function sendPost($method, $data, $headers = [])
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl,[
+            CURLOPT_POST            => 1,
+            CURLOPT_HEADER          => 0,
+            CURLOPT_RETURNTRANSFER  => 1,
+            CURLOPT_URL             => TELEGA_URL . '/' . $method,
+            CURLOPT_POSTFIELDS      => json_encode($data),
+            CURLOPT_HTTPHEADER      => array_merge(array("Content-Type: application/json"), $headers),
+        ]);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return (json_decode($result, 1) ? json_decode($result, 1) : $result);
+    }
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     /**
      * Отправка сообщения в телеграм
      *      возвращает id оправленного сообщения
@@ -70,29 +94,6 @@ class TBot
         $data['chat_id'] = $chat_id;
         $data['action'] = 'typing';
         $this->sendPost('sendChatAction', $data);
-    }
-    //~~~~~~~~~~~~~~~~~~~~
-    /**
-     * Отправка поста в телеграм 
-     * @param string $method (метод телеграм)
-     * @param array $data (массив с отправляемыми параметрами/данными)
-     * @param array $headers (дополнительные заголовки)
-     * 
-     */
-    function sendPost($method, $data, $headers = [])
-    {
-        $curl = curl_init();
-        curl_setopt_array($curl,[
-            CURLOPT_POST            => 1,
-            CURLOPT_HEADER          => 0,
-            CURLOPT_RETURNTRANSFER  => 1,
-            CURLOPT_URL             => TELEGA_URL . '/' . $method,
-            CURLOPT_POSTFIELDS      => json_encode($data),
-            CURLOPT_HTTPHEADER      => array_merge(array("Content-Type: application/json"), $headers),
-        ]);
-        $result = curl_exec($curl);
-        curl_close($curl);
-        return (json_decode($result, 1) ? json_decode($result, 1) : $result);
     }
 
 
