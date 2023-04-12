@@ -19,6 +19,7 @@ class BaseAPI
     }
     public function getChatById($chat_id)
     {
+        $base = new Connect;
         $query = "SELECT * FROM chats WHERE id = '$chat_id' LIMIT 1";
         $data = $base->prepare($query);
         $data->execute();
