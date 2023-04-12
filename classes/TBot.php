@@ -45,7 +45,7 @@ class TBot
      * 
      * @return :id отправленного сообщения
      */
-    function sendMes($chat_id, $text) :string //$mes_id
+    function sendMes($chat_id, $text) //$mes_id
     {
         $method = 'sendMessage';
         $data_to_send = [
