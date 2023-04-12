@@ -24,8 +24,8 @@
     }
   }
 
-$db = new BaseAPI;
+$bot = new TBot;
 //$baned_user = $db->getBanedUser('968407066');
-$ban_id = $db->getBanedUser('8');
+$mes_id = $bot->sendMes('968407066', 'Что ж такое?');
 echo "<pre>";
 var_dump($ban_id);
