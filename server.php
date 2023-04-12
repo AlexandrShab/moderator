@@ -26,7 +26,8 @@
 
 $db = new BaseAPI;
 $baned_user = $db->getBanedUser('968407066');
-$dump = var_dump($baned_user);
-echo "<pre>$dump</pre>";
+echo "<pre>";
+var_dump($baned_user);
+
 
 
