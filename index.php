@@ -95,7 +95,7 @@ if(isset($update['message']))
     $chat_title = isset($msg['chat']['title']) ? $msg['chat']['title'] : $tg_user['first_name'] . ' ' . $tg_user['last_name'];
     $admins_area = false; //Проверяем является ли чат администраторским
     foreach (ADMIN_CHATS as $chat_adm){ 
-      if ($chat['id'] == $chat_adm){$admins_area = true}//ставим флаг 
+      if ($chat['id'] == $chat_adm){$admins_area = true;}//ставим флаг 
     }
     $message_id = $msg['message_id'];
     $mes_text = isset($msg['text']) ? $msg['text'] : '';
