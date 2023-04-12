@@ -64,7 +64,7 @@ if(isset($update['callback_query']))
       $bot->sendMes($chat['id'], "ban_id = $ban_id");
       $baned_user = $db->getBanedUser($ban_id);
        $bot->sendMes($chat['id'],'workaet 66'); 
-      $bot->sendMes(json_encode($baned_user));
+      //$bot->sendMes(json_encode($baned_user));
       $bot->sendMes($chat['id'],'workaet 68'); 
       if(isset($baned_user->menu_id))
       {
