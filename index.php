@@ -46,7 +46,7 @@ if(isset($update['callback_query']))
     //~~~~~~~~~~~~~~~~~~~
     if ($dataBack == 'banuser')
     {
-      $bun_id = substr($callBackData, 7);
+      $ban_id = substr($callBackData, 7);
       $baned_user = $db->getBanedUser($ban_id);
       if(isset($baned_user->menu_id))
       {
@@ -62,10 +62,7 @@ if(isset($update['callback_query']))
   {
       $ban_id = substr($callBackData, 7);
 
-      $baned_user = $db->getBanedUser($ban_id);
-
-      //$bot->sendMes(json_encode($baned_user));
- 
+      $baned_user = $db->getBanedUser($ban_id); 
       if(isset($baned_user->menu_id))
       {
 
