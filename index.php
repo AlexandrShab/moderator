@@ -208,6 +208,7 @@ if(isset($update['message']))
         {
           $mesHasEntities = true;
           $alarmText = '<b>сущности</b>';
+          $bot->sendMes(WORK_GROUP, $user->first_name . 'отправил '.$alarmText);
         }
         $badWords = mesHasBadWords($mes_text);
         if($badWords == false && $mesHasEntities == false)
