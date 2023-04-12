@@ -67,7 +67,8 @@ if(isset($update['callback_query']))
       $bot->sendMes(json_encode($baned_user));
       $bot->sendMes($chat['id'],'workaet 68'); 
       if(isset($baned_user->menu_id))
-      {bot->sendMes($chat['id'],'workaet 70'); 
+      {
+        $bot->sendMes($chat['id'],'workaet 70'); 
         //здесь нужно отредактировать сообщение
         //добавить инфу о том, что сделали с пользователем
         $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
