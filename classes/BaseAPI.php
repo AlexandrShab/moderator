@@ -138,7 +138,12 @@ class BaseAPI
                     VALUES ('$user_id', '$chat_id', '$message_id', '$mes_text');";
         $data = $base->prepare($query);
         $res = $data->execute();
-        return $res;
+        
+        $query = "SELECT MAX(ban_id) FROM black_list;";
+        $data = $base->prepare($query);
+        $data->execute();
+        $ban_id = $data->fetch(PDO::FETCH_ASSOC);
+        return $ban_id[0];
     }
     public function updateBanData($user_id, $chat_id, $message_id, $menu_id)
     {

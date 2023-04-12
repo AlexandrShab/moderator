@@ -25,6 +25,7 @@
   }
 
 $db = new BaseAPI;
-$baned_user = $db->getBanedUser('968407066');
+//$baned_user = $db->getBanedUser('968407066');
+$ban_id = $db->saveBanData('44444', '22222', '156', 'very bad words');
 echo "<pre>";
-var_dump($baned_user);
+var_dump($ban_id);
