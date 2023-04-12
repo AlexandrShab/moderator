@@ -28,4 +28,4 @@ $bot = new TBot;
 //$baned_user = $db->getBanedUser('968407066');
 $mes_id = $bot->sendMes('968407066', 'Что ж такое?');
 echo "<pre>";
-var_dump($ban_id);
+var_dump($mes_id);
