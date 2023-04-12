@@ -46,13 +46,13 @@ if(isset($update['callback_query']))
     //~~~~~~~~~~~~~~~~~~~
     if ($dataBack == 'banuser')
     {
-      $user_id = substr($callBackData, 7);
-      $baned_user = $db->getBanedUser($user_id);
+      $bun_id = substr($callBackData, 7);
+      $baned_user = $db->getBanedUser($ban_id);
       if(isset($baned_user->menu_id))
       {
         $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
       }
-      $bot->banChatMember($baned_user->chat_id, $user_id);
+      $bot->banChatMember($baned_user->chat_id, $baned_user->$user_id);
       $bot->answerCallbackQuery($callback_id,"Пользователь забанен и удален из группы.",true);
       
       return;
@@ -60,8 +60,8 @@ if(isset($update['callback_query']))
   //~~~~~~~~~~~~~~~~~~~~~~~~
   if ($dataBack == 'unbanus')
   {
-      $user_id = substr($callBackData, 7);
-      $baned_user = $db->getBanedUser($user_id);
+      $ban_id = substr($callBackData, 7);
+      $baned_user = $db->getBanedUser($ban_id);
       
       if(isset($baned_user->menu_id))
       {
@@ -70,7 +70,7 @@ if(isset($update['callback_query']))
         $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
         //$bot->sendMes(MY_ID, 'works');
       }
-      $bot->restoreUser($baned_user->chat_id, $user_id);//воостанавливаем права пользователю
+      $bot->restoreUser($baned_user->chat_id, $baned_user->$user_id);//воостанавливаем права пользователю
       $chat_r = $db->getChatById($baned_user->chat_id);//данные чата
       $textStr = "Права пользователя <b>$baned_user->first_name  $baned_user->last_name</b> восстановлены в группе\n";
       $textStr .= "<b>$chat_r->title</b>";
