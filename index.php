@@ -227,11 +227,11 @@ if(isset($update['message']))
             //Сохраним юзера в черный список, удалим сообщение и забаним его
             $bot->sendMes(ADMINS_GROUP, 'Пользователь <b>' . $user->getNameAsTgLink() . "</b> отправил $alarmText:");
             $bot->forwardMessage(ADMINS_GROUP, $chat_id, $message_id);//пересылаем админам
-            $db->saveBanData($user_id, $chat_id, $message_id, $mes_text);// Сохраняем данные в черный список
+            $ban_id = $db->saveBanData($user_id, $chat_id, $message_id, $mes_text);// Сохраняем данные в черный список
             $bot->delMess($chat_id, $message_id);//Удаляем сообщение
             $bot->restrictUser($chat_id, $user_id);//запрещаем отправку сообщений юзеру
             
-            $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($chat_id, $user_id));
+            $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($chat_id, $user_id, $ban_id));
             
             $db->updateBanData($user_id, $chat_id, $message_id, $menu_id);
             $bot->sendMes(MY_ID, $menu_id);// проверка
