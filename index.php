@@ -194,13 +194,13 @@ if(isset($update['message']))
         
         $db->updateChatList($chat);//Проверяем/добавляем чат
         $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
-        
+ $bot->sendMes($chat_id,'workaet1');   
         if ($user->isAdmin())// Если сообщение написал админ, - проверки не запускаем
         {
           $admins_area = true; //ставим флаг
-        }
+        } $bot->sendMes($chat_id,'workaet2'); 
         if($admins_area = true) return;//если область админов - выход
-
+$bot->sendMes($chat_id,'workaet3'); 
         $mesHasEntities = false;
         $alarmText = '';
 
