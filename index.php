@@ -11,6 +11,7 @@ exit();
   define('BOT_GROUP',    '-1001860899757');   //Bot_privateMessages
   define('ADMINS_GROUP', '-1001822311523');   //info From Bots  
   define('WORK_GROUP',   '-1001985844919'); //рабочая общая группа (тестовая)
+  
   define('BOT_NAME','@Moder_TopBot');
   
 require_once __DIR__ . '/autoload.php';
