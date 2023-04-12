@@ -206,7 +206,7 @@ $tg_user = getTelegramUserData();
     }
     
 ?>
-    <div class="brand" style="backgroundColor: black;">
+    <div class="brand" style="background-color: black;">
         <text>Moder_TopBot</text>
     </div>
     
