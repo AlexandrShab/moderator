@@ -209,7 +209,7 @@ if(isset($update['message']))
         {
           $mesHasEntities = true;
           $alarmText = '<b>сущности</b>';
-          $bot->sendMes(WORK_GROUP, $user->first_name . 'отправил '.$alarmText);
+          
         }
         $badWords = mesHasBadWords($mes_text);
         if($badWords == false && $mesHasEntities == false)
@@ -236,7 +236,7 @@ if(isset($update['message']))
             $menu_id = $bot->sendKeyboard(ADMINS_GROUP, 'Пользователю <b>' . $user->getNameAsTgLink() . '</b> установлен запрет на отправку сообщений.', banKeyboard($ban_id));
             
             $db->updateBanData($user_id, $chat_id, $message_id, $menu_id);
-            $bot->sendMes(MY_ID, $menu_id);// проверка
+         
         } 
         
 
