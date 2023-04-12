@@ -116,6 +116,10 @@ if(isset($update['message']))
     {
         $bot->sendMes(MY_ID, 'button_text:' . $msg['web_app_data']['button_text'] . '\n' . 'data:\n' . $msg['web_app_data']['data']);
     }
+    if(isset($msg['left_chat_member']))
+    {
+
+    }
     //~~~~~~ Работаем с Юзером и базой ~~~
     $base = new BaseAPI;
     $userFromBase = $base->getUser($tg_user['id']);
@@ -156,12 +160,7 @@ if(isset($update['message']))
             $bot->sendKeyboard($chat_id, $text2, writeToExpertKeyboard());
             return;
           }
-          if (($msg['text'] == ('/getChat' . BOT_NAME)) || ($msg['text'] == '/getChat'))
-          { 
-              $res = $bot->getChat($chat_id);
-              $bot->sendMes(MY_ID, json_encode($res));
-            return;
-          }
+          
           if (($msg['text'] == ('/help' . BOT_NAME)) || ($msg['text'] == '/help'))
           { 
             
