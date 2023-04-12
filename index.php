@@ -61,8 +61,6 @@ if(isset($update['callback_query']))
       $user_id = substr($callBackData, 7);
       $baned_user = $db->getBanedUser($user_id);
       
-      $user_fromDB = $db->getUser($user_id);
-      $user = new User($user_fromDB); // Объект юзера из базы
       if(isset($baned_user->menu_id))
       {
         //здесь нужно отредактировать сообщение
@@ -72,7 +70,9 @@ if(isset($update['callback_query']))
       }
       $bot->restoreUser($baned_user->chat_id, $user_id);//воостанавливаем права пользователю
       $chat_r = $db->getChatById($baned_user->chat_id);//данные чата
-
+      $textStr = "Права пользователя <b>$baned_user->first_name  $baned_user->last_name</b> восстановлены в группе\n";
+      $textStr .= "<b>$chat_r->title</b>";
+      $bot->sendMes($chat['id'], $textStr);
       $bot->answerCallbackQuery($callback_id, 'Пользователь  снова может писать в общую группу.',true);
       return;
   }
