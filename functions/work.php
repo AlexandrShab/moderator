@@ -139,7 +139,7 @@ function banKeyboard($ban_id)
         'inline_keyboard' =>
           [
       [['text' => 'Выгнать', 'callback_data' => 'banuser' . $ban_id],
-       ['text' => 'Снять запрет', 'callback_data' => 'unbanus'.$ban_id]],
+       ['text' => 'Снять запрет', 'callback_data' => 'unbanus' . $ban_id]],
           ],
     ];
     return $keyboard;
