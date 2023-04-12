@@ -170,10 +170,11 @@ class BaseAPI
         
         return $res;
     }
-    public function getBanedUser($user_id)
+    public function getBanedUser($ban_id)
     {
         $base = new Connect;
-        $query = "SELECT chat_id, mes_text, menu_id, first_name, last_name FROM black_list JOIN users ON user_id = '$user_id' LIMIT 1;";
+        $query = "SELECT ban_id, chat_id, mes_text, menu_id, first_name, last_name FROM black_list 
+        JOIN users ON user_id WHERE ban_id = '$ban_id';";
         $data = $base->prepare($query);
         $data->execute();
         $res = $data->fetch(PDO::FETCH_OBJ);

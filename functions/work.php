@@ -133,13 +133,13 @@ function answerFromBot($chat_id, $name)
     ];
     return $keyboard;   
 }
-function banKeyboard($chat_id, $user_id, $ban_id)
+function banKeyboard($ban_id)
 {
     $keyboard = [
         'inline_keyboard' =>
           [
-      [['text' => 'Выгнать', 'callback_data' => "banuser$user_id;$ban_id"],
-       ['text' => 'Снять запрет', 'callback_data' => "unbanus$user_id;$ban_id"]],
+      [['text' => 'Выгнать', 'callback_data' => "banuser$ban_id"],
+       ['text' => 'Снять запрет', 'callback_data' => "unbanus$ban_id"]],
           ],
     ];
     return $keyboard;
