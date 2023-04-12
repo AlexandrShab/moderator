@@ -73,7 +73,7 @@ if(isset($update['callback_query']))
         //добавить инфу о том, что сделали с пользователем
         $bot->delMess($chat['id'], $baned_user->menu_id);   // удаляем меню
         //$bot->sendMes(MY_ID, 'works');
-        bot->sendMes($chat['id'],'workaet 75'); 
+        $bot->sendMes($chat['id'],'workaet 75'); 
       }
       $bot->restoreUser($baned_user->chat_id, $baned_user->$user_id);//воостанавливаем права пользователю
       $chat_r = $db->getChatById($baned_user->chat_id);//данные чата
