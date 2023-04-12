@@ -11,7 +11,8 @@ exit();
   define('BOT_GROUP',    '-1001860899757');   //Bot_privateMessages
   define('ADMINS_GROUP', '-1001822311523');   //info From Bots  
   define('WORK_GROUP',   '-1001985844919'); //рабочая общая группа (тестовая)
-  
+  define('ADMIN_CHATS', [BOT_GROUP, ADMINS_GROUP]);
+
   define('BOT_NAME','@Moder_TopBot');
   
 require_once __DIR__ . '/autoload.php';
@@ -82,6 +83,8 @@ if(isset($update['callback_query']))
 //~~~~~~~~~~~ Начало обработки апдейта типа message ~~~~~~
 if(isset($update['message']))
 {
+    
+    
     $msg = $update['message'];
     $tg_user = $msg['from'];
     $user_id = $msg['from']['id'];
@@ -90,7 +93,10 @@ if(isset($update['message']))
     $chat_id = $chat['id'];
     $chat_type = $msg['chat']['type'];
     $chat_title = isset($msg['chat']['title']) ? $msg['chat']['title'] : $tg_user['first_name'] . ' ' . $tg_user['last_name'];
-
+    $admins_area = false; //Проверяем является ли чат администраторским
+    foreach (ADMIN_CHATS as $chat_adm){ 
+      if ($chat['id'] == $chat_adm){$admins_area = true}//ставим флаг 
+    }
     $message_id = $msg['message_id'];
     $mes_text = isset($msg['text']) ? $msg['text'] : '';
     if (isset($msg['caption'])){
@@ -189,13 +195,12 @@ if(isset($update['message']))
         $db->updateChatList($chat);//Проверяем/добавляем чат
         $db->addChatMember($user_id, $chat_id);//Проверяем/добавляем чат-мембера
         
-        
-        
         if ($user->isAdmin())// Если сообщение написал админ, - проверки не запускаем
         {
-          return;
+          $admins_area = true; //ставим флаг
         }
-        
+        if($admins_area = true) return;//если область админов - выход
+
         $mesHasEntities = false;
         $alarmText = '';
 
