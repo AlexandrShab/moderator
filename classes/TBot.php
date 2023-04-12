@@ -54,8 +54,8 @@ class TBot
             'parse_mode' => 'HTML',
             ];
         $res = $this->sendPost($method, $data_to_send);
-            return $res;
-        //return $res['result']['message_id'];
+            
+        return $res['result']['message_id'];
     }
     /**
      * Отправка сообщения в телеграм с клавиатурой
